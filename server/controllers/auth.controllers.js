@@ -28,6 +28,14 @@ exports.register = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: user });
 });
 
+// @desc    Verify user
+// @route   GET api/auth/verify
+// @access  Private
+exports.verifyUser = asyncHandler(async (req, res, next) => {
+  const { token } = req.cookies
+  console.log(token)
+})
+
 // @desc    Login user
 // @route   POST api/auth/login
 // @access  Public
