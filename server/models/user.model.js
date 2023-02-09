@@ -18,8 +18,8 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    select: false,
     required: [true, "Please enter a password"],
+    select: false,
   },
   createdAt: {
     type: Date,
@@ -38,8 +38,7 @@ userSchema.methods.getSignToken = function () {
   });
 };
 userSchema.methods.matchPassword = async function (passwordEntered) {
-  console.log(passwordEntered, this.password)
-  return await bcrypt.compare(passwordEntered, this.password);
+  return await bcrypt.compare(passwordEntered + "", this.password + "");
 };
 
 module.exports = mongoose.model("User", userSchema);

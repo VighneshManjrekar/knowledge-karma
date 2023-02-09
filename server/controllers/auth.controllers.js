@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
@@ -32,7 +33,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @access  Public
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+password");
   const isValid = await user.matchPassword(password);
   if (!user || !isValid) {
     return next(new ErrorResponse("Invalid credentials", 401));
