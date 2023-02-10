@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const asyncHandler = require("../middleware/asyncHandler");
+const getVerifiedToken = require("../middleware/verifyToken");
 const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -33,7 +34,12 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.verifyUser = asyncHandler(async (req, res, next) => {
   const { token } = req.cookies
-  console.log(token)
+  const { id } = getVerifiedToken(token)
+  const user = await User.findOne({ id })
+  if (!user) {
+    res.json({ success: false })
+  }
+  res.status(200).json({ success: true, data: user })
 })
 
 // @desc    Login user
