@@ -14,7 +14,7 @@ const { PORT } = process.env || 7000;
 const { NODE_ENV } = process.env;
 const app = express();
 const corsOptions = {
-  origin: ['http://localhost:3000'],
+  origin: ["http://localhost:3000"],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -26,10 +26,13 @@ if (NODE_ENV == "development") app.use(morgan("dev"));
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use((req, res) => {
+  res.status(404).json({ success: false, error: "Route not found" });
+});
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  // process.stdout.write(clc.reset); // clear previous logs after server restart
+  if (NODE_ENV == "production") process.stdout.write(clc.reset);
   console.log(
     clc.black.bgGreenBright(
       `Server running on http://localhost:${PORT} in ${NODE_ENV}`

@@ -32,6 +32,7 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
 userSchema.methods.getSignToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
@@ -40,5 +41,19 @@ userSchema.methods.getSignToken = function () {
 userSchema.methods.matchPassword = async function (passwordEntered) {
   return await bcrypt.compare(passwordEntered + "", this.password + "");
 };
-
+userSchema.methods.createResetPassLink = function () {
+  const payload = {
+    email: this.email,
+    id: this._id,
+  };
+  const secret = process.env.JWT_SECRET + this.password
+  const token = jwt.sign(payload, secret, {
+    expiresIn: process.env.RESET_PASS_EXPIRE,
+  });
+  return `http://localhost:7000/api/auth/reset-password/${this._id}/${token}`;
+};
+userSchema.methods.verifyResetToken = function (token) {
+  const secret = process.env.JWT_SECRET + this.password
+  return jwt.verify(token,secret)
+};
 module.exports = mongoose.model("User", userSchema);
