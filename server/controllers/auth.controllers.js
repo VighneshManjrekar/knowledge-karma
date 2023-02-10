@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
@@ -39,4 +38,15 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
   sendToken(user, 200, res);
+});
+
+// @desc    Get signed in user profile
+// @route   GET api/auth/profile
+// @access  Private
+exports.getUser = asyncHandler(async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorized!", 401));
+  }
+  const user = await User.findById(req.user);
+  res.status(200).json({ success: true, data: user });
 });
