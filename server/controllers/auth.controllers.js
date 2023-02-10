@@ -1,6 +1,4 @@
-const bcrypt = require("bcrypt");
 const asyncHandler = require("../middleware/asyncHandler");
-const getVerifiedToken = require("../middleware/verifyToken");
 const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -29,19 +27,6 @@ exports.register = asyncHandler(async (req, res, next) => {
   res.status(201).json({ success: true, data: user });
 });
 
-// @desc    Verify user
-// @route   GET api/auth/verify
-// @access  Private
-exports.verifyUser = asyncHandler(async (req, res, next) => {
-  const { token } = req.cookies
-  const { id } = getVerifiedToken(token)
-  const user = await User.findOne({ id })
-  if (!user) {
-    res.json({ success: false })
-  }
-  res.status(200).json({ success: true, data: user })
-})
-
 // @desc    Login user
 // @route   POST api/auth/login
 // @access  Public
@@ -53,4 +38,15 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
   sendToken(user, 200, res);
+});
+
+// @desc    Get signed in user profile
+// @route   GET api/auth/profile
+// @access  Private
+exports.getUser = asyncHandler(async (req, res, next) => {
+  if (!req.user) {
+    return next(new ErrorResponse("Unauthorized!", 401));
+  }
+  const user = await User.findById(req.user);
+  res.status(200).json({ success: true, data: user });
 });
