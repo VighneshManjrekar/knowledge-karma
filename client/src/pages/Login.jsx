@@ -14,37 +14,33 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-// theme to be created
-
+import authService from "../features/auth/authService"
+import { setUser } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Login() {
     let navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [snackbar, setSnackbar] = useState({ status: "success", msg: "Logged in Successfully !" })
-    const [creds, setCreds] = useState({ email: "", password: "" });
+    const dispatch = useDispatch()
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
 
-    // add function to check user credentials
-    const [loggedIn, setLoggedIn] = useState(false);
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-
-    };
-
-    const handleOnChange = (e) => {
-        setCreds({ ...creds, [e.target.name]: e.target.value });
-        if (creds.email && creds.password) {
-            setLoggedIn(true);
+        if (!email || !password) {
+            return
         }
-        else {
-            setLoggedIn(false);
+        const data = {
+            email, password
         }
-        // this syntax tells that - keep newNote as it is and keep updating e.target.val
-    };
+        const response = await authService.loginUser(data)
+        if (response.success) {
+            dispatch(setUser(response.data))
+            navigate('/marketplace')
+        }
+    }
 
 
     return (
@@ -89,7 +85,8 @@ export default function Login() {
                             borderRadius: 2,
                         }}
                         autoComplete="email"
-                        onChange={handleOnChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         autoFocus
                     />
                     <TextField
@@ -105,8 +102,9 @@ export default function Login() {
                             color: "text.primary",
                             borderRadius: 2,
                         }}
+                        value={password}
                         autoComplete="current-password"
-                        onChange={handleOnChange}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="secondary" />}
@@ -118,7 +116,7 @@ export default function Login() {
                         color="secondary"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        onClick="handleSubmit"
+                        onClick={handleSubmit}
                     >
                         Login
                     </Button>

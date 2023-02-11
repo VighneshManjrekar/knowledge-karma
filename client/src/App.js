@@ -6,26 +6,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './features/auth/authSlice';
 import Navbar from './components/Navbar/Navbar';
 import Marketplace from './pages/Marketplace';
-import Home from './pages/Home';
+import Home from './components/Home';
 import CommunityTab from './pages/CommunityTab';
 import Contributors from './pages/Contributors';
-import Auth from './components/Auth/Auth';
+import Auth from "./components/auth/Auth"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-
-import Navbar from "../src/components/Navbar.jsx";
-import Home from "../src/components/Home.jsx";
-import Login from "./components/auth/Login.jsx";
-import Signup from "./components/auth/Signup.jsx";
-import Auth from "./components/auth/Auth";
-import Community from './pages/Community';
-import Contributors from './pages/Contributors';
-import Marketplace from './pages/Marketplace';
-
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -37,6 +23,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import Profile from './pages/Profile';
 
 
 
@@ -50,8 +37,8 @@ function App() {
 
     const checkSession = async () => {
       if (!user) {
-        const userData = await authService.verifyUser();
-        console.log(userData.success)
+        const userData = await authService.getLoginUser();
+        // console.log(userData.success)
 
         if (userData.success) {
           dispatch(setUser(userData.data))
@@ -70,39 +57,40 @@ function App() {
 
 
 
-  const onClick = async () => {
-    console.log(user)
-    const data = {
-      name: "John",
-      email: "johndoe@gmail.com",
-      password: "johndoe"
-    }
+  // const onClick = async () => {
+  //   console.log(user)
+  //   const data = {
+  //     // name: "John",
+  //     email: "din@gmail.com",
+  //     password: "johndoe"
+  //   }
 
 
-    // const userData = await authService.registerUser(data);
-    const userData = await authService.verifyUser();
+  //   // const userData = await authService.loginUser(data);
+  //   const userData = await authService.getLoginUser();
 
-    // console.log(userData)
+  //   console.log(userData)
 
-    // dispatch(setUser(userData.data))
-  }
+  //   // dispatch(setUser(userData.data))
+  // }
 
   return (
     <div className="App">
       {/* <button onClick={onClick}>Click Me</button> */}
       <Router>
-          <Navbar />
+        <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
         <Routes>
-            <Route path='auth/*' element={<Auth />}>
-              <Route index={true} element={<Login />} />
-              <Route path='signup' element={<Signup />} />
-            </Route>
-            <Route path='/' element={<Home />} >
-              <Route index={true} element={<Community />} />
-              <Route path='community' element={<Community />} />
-              <Route path='contributers' element={<Contributors />} />
-              <Route path='marketplace' element={<Marketplace />} />
-            </Route>
+          <Route path='/auth' element={<Auth />}>
+            <Route index={true} element={<Login />} />
+            <Route path='signup' element={<SignUp />} />
+          </Route>
+          <Route path='/' element={<Home />} >
+            <Route path='community' element={<CommunityTab />} />
+            <Route path='contributers' element={<Contributors />} />
+            <Route path='marketplace' element={<Marketplace />} />
+          </Route>
+          <Route path='/profile/:id' element={<Profile />} >
+          </Route>
         </Routes>
       </Router>
     </div>
