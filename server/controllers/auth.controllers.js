@@ -118,8 +118,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 exports.getRanking = asyncHandler(async (req, res, next) => {
   const users = await User.find()
     .sort({ points: -1 })
-    .select("name profile email role")
-    .limit(5);
+    .limit(10);
   const filteredUsers = users.filter((user) => user._doc.role !== "admin");
   res.status(200).json({ success: true, data: filteredUsers });
 });
