@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react'
 
-const Contributors = () => {
-    return <div>Contributors</div>;
-};
-
-export default Contributors;
+export default function Contributors() {
+  return (
+    <div>
+        <h1>Contributer</h1>
+    </div>
+  )
+}

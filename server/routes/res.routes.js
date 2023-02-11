@@ -1,5 +1,7 @@
 const router = require("express").Router();
 
+const reviewRoutes = require("./review.routes");
+
 const {
   getResources,
   getAllResources,
@@ -9,8 +11,9 @@ const {
   deleteResources,
 } = require("../controllers/res.controllers");
 const { protect } = require("../middleware/authorization");
+router.use("/:resourceId/reviews", reviewRoutes);
 
-// public routes
+// Protected routes
 router.route("/").get(protect, getResources).post(protect, createResources);
 router.get("/status", getAllResources);
 router
@@ -18,5 +21,6 @@ router
   .get(protect, getResource)
   .put(protect, updateResources)
   .delete(protect, deleteResources);
+
 
 module.exports = router;

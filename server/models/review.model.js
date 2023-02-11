@@ -23,6 +23,16 @@ const reviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  votes: {
+    upvote: {
+      type: Number,
+      default: 0,
+    },
+    downvote: {
+      type: Number,
+      default: 0,
+    },
+  },
   resource: {
     type: mongoose.Types.ObjectId,
     ref: "Resource",

@@ -1,7 +1,13 @@
-import React from "react";
+import React from 'react'
+import ProductContainer from "../components/ProductContainer";
+import Container from '@mui/material/Container';
 
-const Marketplace = () => {
-    return <div>Marketplace</div>;
-};
 
-export default Marketplace;
+export default function Marketplace() {
+  return (
+    <div>
+        <h1>Marketplace</h1>
+        <ProductContainer />
+    </div>
+  )
+}

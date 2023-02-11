@@ -73,4 +73,9 @@ const resourceSchema = new mongoose.Schema({
   },
 });
 
+resourceSchema.pre("remove", async function (next) {
+  await this.model("Review").deleteMany({ resource: this._id });
+  next();
+});
+
 module.exports = mongoose.model("Resource", resourceSchema);
