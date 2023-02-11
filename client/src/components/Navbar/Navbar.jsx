@@ -4,20 +4,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 
-const Navbar = ({ changeTab, currentTab }) => {
+const Navbar = () => {
 
     const { user } = useSelector(state => state.auth)
     return (
         <div className={styles.navWrapper}>
             <div className={styles.logo}>KnowledgeKarma</div>
             <div className={styles.navTabs}>
-                <div className={`${styles.navTab} ${currentTab === 'marketplace' ? styles.active : ''}`} onClick={() => changeTab('marketplace')}>
+                <div className={`${styles.navTab} ${styles.active}`}>
                     <span><Link to='/marketplace' style={{ textDecoration: 'none' }}>Marketplace</Link> </span>
                 </div>
-                <div className={`${styles.navTab} ${currentTab === 'community' ? styles.active : ''}`} onClick={() => changeTab('community')}>
+                <div className={`${styles.navTab}`}>
                     <span><Link to='/community' style={{ textDecoration: 'none' }}>Community</Link> </span>
                 </div>
-                <div className={`${styles.navTab} ${currentTab === 'contributors' ? styles.active : ''}`} onClick={() => changeTab('contributors')}>
+                <div className={`${styles.navTab}`}>
                     <span><Link to='/contributers' style={{ textDecoration: 'none' }}>Contributers</Link> </span>
                 </div>
             </div>

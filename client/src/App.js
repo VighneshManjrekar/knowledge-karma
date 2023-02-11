@@ -29,7 +29,7 @@ import Profile from './pages/Profile';
 
 
 function App() {
-  const [currentTab, setCurrentTab] = useState('marketplace')
+  // const [currentTab, setCurrentTab] = useState('marketplace')
 
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
@@ -76,7 +76,7 @@ function App() {
     <div className="App">
       {/* <button onClick={onClick}>Click Me</button> */}
       <Router>
-        <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        <Navbar />
         <Routes>
           <Route path='/' element={<Auth />}>
             <Route index={true} element={<Login />} />
