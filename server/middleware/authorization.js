@@ -13,7 +13,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   if (!token) {
     return next(new ErrorResponse("Unauthorized", 401));
   }
-  const user = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
+  const user = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(user.id);
   next();
 });

@@ -85,12 +85,13 @@ exports.updateResources = asyncHandler(async (req, res, next) => {
 // @route   Delete api/resources/:id
 // @access  Private
 exports.deleteResources = asyncHandler(async (req, res, next) => {
-  const resourceDeleted = await Res.findOneAndDelete({
+  const resource = await Res.findOne({
     _id: req.params.id,
     owner: req.user._id,
   });
-  if (!resourceDeleted) {
+  if (!resource) {
     return next(new ErrorResponse("User is not an owner", 401));
   }
+  const resourceDeleted = await resource.remove();
   res.status(201).json({ success: true, data: resourceDeleted });
 });
