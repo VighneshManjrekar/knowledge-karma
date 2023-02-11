@@ -41,7 +41,7 @@ function App() {
       // console.log(userData.success)
 
       if (userData.success) {
-        dispatch(setUser(userData.data))
+        dispatch(setUser(userData.user))
       } else {
         console.log("User session expired")
       }
