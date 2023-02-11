@@ -1,6 +1,7 @@
-// import faker from 'faker';
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -12,8 +13,7 @@ import {
   Avatar,
   Grid,
   Typography,
-  TablePagination,
-  TableFooter
+  TableFooter,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,29 +49,81 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-let USERS = [], STATUSES = ['Active', 'Pending', 'Blocked'];
-for (let i = 0; i < 14; i++) {
-  USERS[i] = {
-    name: "yash",
-    email: "yash@djdj.com",
-    points: 556,
+const names =[ {
+  name: 'John',
+  email: "dhas@gmail.com",
+  points: 35
+},
+{
+  name: 'Jane',
+  email: "dhas@gmail.com",
+  points: 29
+},
+{
+  name: 'Bob',
+  email: "dhas@gmail.com",
+  points: 41
+},
+{
+  name: 'Linda',
+  email: "dhas@gmail.com",
+  points: 33
+},
 
-  }
+{
+  name: 'Jane',
+  email: "dhas@gmail.com",
+  points: 29
+},
+{
+  name: 'Bob',
+  email: "dhas@gmail.com",
+  points: 415
+},
+{
+  name: 'Linda',
+  email: "dhas@gmail.com",
+  points: 333
+},
+{
+  name: 'Jane',
+  email: "dhas@gmail.com",
+  points: 249
+},
+{
+  name: 'Bob',
+  email: "dhas@gmail.com",
+  points: 434
+},
+{
+  name: 'Linda',
+  email: "dhas@gmail.com",
+  points: 323
+},
+{
+  name: 'Jane',
+  email: "dhas@gmail.com",
+  points: 229
+},
+{
+  name: 'Bob',
+  email: "dhas@gmail.com",
+  points: 404
+},
+{
+  name: 'Linda',
+  email: "dhas@gmail.com",
+  points: 212
 }
+]
 
 function MTable() {
+  const [people, setPeople] = useState(names);
+  
+    // const sortDescending = () => {
+    //   setPeople([...people].sort((a, b) => b.points - a.points));
+    // };
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
   const mystyle = {
     display:"flex",
     justifyContent:"center",
@@ -88,42 +140,30 @@ function MTable() {
           <TableRow>
             <TableCell className={classes.tableHeaderCell}>User Info</TableCell>
             <TableCell className={classes.tableHeaderCell}>Points</TableCell>
-            {/* <TableCell className={classes.tableHeaderCell}>Joining Date</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Status</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {USERS.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-            <TableRow key={row.name}>
+          {people.map((person,index)=>(
+            <TableRow key={index}>
               <TableCell>
                 <Grid container>
                   <Grid item lg={2}>
-                    <Avatar alt={row.name} src='.' className={classes.avatar} />
+                    <Avatar alt={person.name} src='.' className={classes.avatar} />
                   </Grid>
                   <Grid item lg={10}>
-                    <Typography className={classes.name}>{row.name}</Typography>
-                    <Typography color="textSecondary" variant="body2">{row.email}</Typography>
+                    <Typography className={classes.name}>{person.name}</Typography>
+                    <Typography color="textSecondary" variant="body2">{person.email}</Typography>
                   </Grid>
                 </Grid>
               </TableCell>
               <TableCell>
-                <Typography color="primary" variant="subtitle2">{row.points}</Typography>
+                <Typography color="primary" variant="subtitle2">{person.points}</Typography>
               </TableCell>
-
-
             </TableRow>
-          ))}
+                  ))}
         </TableBody>
         <TableFooter>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 15]}
-            component="div"
-            count={USERS.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+      {/* <button onClick={sortDescending}>Sort by points (Descending)</button> */}
         </TableFooter>
       </Table>
     </TableContainer>
