@@ -4,7 +4,7 @@ const errorHandler = (err, req, res, next) => {
   const error = { ...err };
   error.message = err.message;
   error.name = err.name;
-  
+
   // invalid mongoose id error
   if (error.name == "CastError") {
     error.message = `Invalid Resource Id`;
@@ -13,6 +13,10 @@ const errorHandler = (err, req, res, next) => {
   // duplicate value error
   if (error.code == 11000) {
     error.message = `Entered ${[Object.keys(error.keyPattern)]} already exists`;
+    if ((error.keyPattern.user == error.keyPattern.user) == 1) {
+      error.message =
+        "One user can only write single review on an each resouruce";
+    }
     error.status = 401;
     new ErrorResponse(error.message, error.status);
   }
@@ -22,7 +26,7 @@ const errorHandler = (err, req, res, next) => {
     error.status = 401;
     new ErrorResponse(error.message, error.status);
   }
-  
+
   res
     .status(error.status || 500)
     .json({ success: false, error: error.message || "Internal Server Error" });
