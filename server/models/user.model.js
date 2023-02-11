@@ -21,6 +21,15 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter a password"],
     select: false,
   },
+  points: {
+    type: Number,
+    min: 0,
+    default: 0,
+  },
+  profile: {
+    type: String,
+    default: "profile-placeholder.jpg",
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -46,14 +55,14 @@ userSchema.methods.createResetPassLink = function () {
     email: this.email,
     id: this._id,
   };
-  const secret = process.env.JWT_SECRET + this.password
+  const secret = process.env.JWT_SECRET + this.password;
   const token = jwt.sign(payload, secret, {
     expiresIn: process.env.RESET_PASS_EXPIRE,
   });
   return `http://localhost:7000/api/auth/reset-password/${this._id}/${token}`;
 };
 userSchema.methods.verifyResetToken = function (token) {
-  const secret = process.env.JWT_SECRET + this.password
-  return jwt.verify(token,secret)
+  const secret = process.env.JWT_SECRET + this.password;
+  return jwt.verify(token, secret);
 };
 module.exports = mongoose.model("User", userSchema);
