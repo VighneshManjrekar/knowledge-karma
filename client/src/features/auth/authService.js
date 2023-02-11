@@ -21,7 +21,7 @@ const loginUser = async (data) => {
 
 
 // Verify User Access Token
-const verifyUser = async () => {
+const getUser = async () => {
     const response = await verifyToken();
     return response.data
 }
@@ -29,7 +29,7 @@ const verifyUser = async () => {
 const authService = {
     registerUser,
     loginUser,
-    verifyUser,
+    getUser,
 
     // login,
 }
