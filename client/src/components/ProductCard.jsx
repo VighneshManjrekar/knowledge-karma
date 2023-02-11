@@ -13,13 +13,13 @@ import { IconButton } from '@mui/material';
 export default function ProductCard() {
   return (
     <div className="productCard">
-      <Card sx={{ maxWidth: 'auto', borderRadius:2 }}>
+      <Card sx={{ maxWidth: 'auto', borderRadius: 2 }}>
         <CardMedia
           sx={{ height: 300 }}
           image={PImage}
           title="green iguana"
         />
-        
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Sem 4 - DSA Greedy notes
@@ -29,7 +29,7 @@ export default function ProductCard() {
             species, ranging across all continents except Antarctica
           </Typography>
         </CardContent>
-        <CardActions sx={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+        <CardActions sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <div>
             <Button size="small">₹00</Button>
             <Button size="small">Learn More</Button>

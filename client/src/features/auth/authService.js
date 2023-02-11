@@ -1,4 +1,4 @@
-import { login, register, verifyToken } from "../../http/index"
+import { getUser, login, register } from "../../http/index"
 
 
 // Register user
@@ -21,17 +21,15 @@ const loginUser = async (data) => {
 
 
 // Verify User Access Token
-const getUser = async () => {
-    const response = await verifyToken();
+const getLoginUser = async () => {
+    const response = await getUser();
     return response.data
 }
 
 const authService = {
     registerUser,
     loginUser,
-    getUser,
-
-    // login,
+    getLoginUser,
 }
 
 export default authService
