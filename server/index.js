@@ -10,6 +10,7 @@ const connectDB = require("./configs/db");
 const errorHandler = require("./middleware/errorHandler");
 const authRouter = require("./routes/auth.routes");
 const resRouter = require("./routes/res.routes");
+const adminRouter = require("./routes/admin.routes");
 
 const { PORT } = process.env || 7000;
 const { NODE_ENV } = process.env;
@@ -26,6 +27,7 @@ app.use(cookieParser());
 if (NODE_ENV == "development") app.use(morgan("dev"));
 
 app.use(express.json());
+app.use("/api/admin", adminRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/resources", resRouter);
 app.use((req, res) => {

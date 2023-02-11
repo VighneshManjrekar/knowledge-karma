@@ -7,6 +7,7 @@ const {
   forgotPassword,
   resetPassword,
   logout,
+  getRanking,
 } = require("../controllers/auth.controllers");
 const { protect } = require("../middleware/authorization");
 
@@ -16,6 +17,7 @@ router.post("/login", login);
 router.get("/logout", logout);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:id/:token", resetPassword);
+router.get("/ranking", getRanking);
 
 // protected routes
 router.get("/profile", protect, getProfile);

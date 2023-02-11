@@ -14,6 +14,15 @@ exports.protect = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Unauthorized", 401));
   }
   const user = jwt.verify(token, process.env.JWT_SECRET);
-  req.user = await User.findById(user.id);
+  req.user = await User.findById(user.id).select("-password");
+  next();
+});
+exports.admin = asyncHandler(async (req, res, next) => {
+  if (
+    !Object.keys(req.user._doc).includes("role") &&
+    req.user._doc.role !== "admin"
+  ) {
+    return next(new ErrorResponse("Not Admin", 401));
+  }
   next();
 });
