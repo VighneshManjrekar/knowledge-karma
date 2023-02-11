@@ -82,6 +82,7 @@ function App() {
               <Route path='signup' element={<Signup />} />
             </Route>
             <Route path='/' element={<Home />} >
+              <Route index={true} element={<Community />} />
               <Route path='community' element={<Community />} />
               <Route path='contributers' element={<Contributors />} />
               <Route path='marketplace' element={<Marketplace />} />

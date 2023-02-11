@@ -2,24 +2,47 @@
   text-align: center;
 }
 
-.AppBar{
-  background: linear-gradient(to right, blueviolet, rgb(105, 16, 187));
+.ProductContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CardActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.productCard {
+  transition: all 0.3s ease;
+}
+
+.productCard:hover {
+  box-shadow: 2px 3px 5px gray;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.DrawerBtn {
+  width: auto;
+  display: flex;
+  align-items: left;
+  margin-left: 160px;
+  margin-top:30px;
 }
 
 
-
-
-.App-link {
-  color: rgb(112, 76, 182);
-}
 
 @keyframes App-logo-float {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(10px);
   }
+
   100% {
     transform: translateY(0px);
   }
