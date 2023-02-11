@@ -10,17 +10,9 @@ exports.getResources = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: resources });
 });
 
-// @desc    Get all resources
-// @route   GET api/resources/status
-// @access  Private
-exports.getAllResources = asyncHandler(async (req, res, next) => {
-  const resources = await Res.find();
-  res.status(200).json({ success: true, data: resources });
-});
-
 // @desc    Get single resource
 // @route   GET api/resources/:id
-// @access  Private
+// @access  Public
 exports.getResource = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const resource = await Res.findOne({ _id: id });
