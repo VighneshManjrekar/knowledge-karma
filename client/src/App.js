@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import authService from './features/auth/authService';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from './features/auth/authSlice';
+import { getUser } from './features/auth/authSlice';
 
 
 
@@ -19,7 +19,7 @@ function App() {
         console.log(userData.success)
 
         if (userData.success) {
-          dispatch(setUser(userData.data))
+          dispatch(getUser(userData.data))
         } else {
           console.log("User session expired")
         }
@@ -52,6 +52,7 @@ function App() {
 
   return (
     <div>
+      <Navbar />
       <button onClick={onClick}>Click Me</button>
     </div>
   );

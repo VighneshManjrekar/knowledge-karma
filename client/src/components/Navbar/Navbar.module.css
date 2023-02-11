@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700&family=Poppins:wght@300;400;600&family=Roboto:wght@500;700&display=swap');
+
+.navWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+}
+
+.logo {
+    font-family: 'Poppins', 'Roboto';
+    font-size: 24px;
+    font-weight: 600;
+    padding: 10px 0px;
+}
+
+.navTab {
+    font-family: 'Poppins';
+    padding: 10px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    line-height: 2.25rem;
+    font-weight: 400;
+    letter-spacing: .22px;
+    color: gray;
+    cursor: pointer;
+}
+
+.navTabs {
+    display: flex;
+    gap: 15px;
+}
+
+.navTab:hover {
+    background-color: #9cbeee4f;
+}
+
+
+.active {
+    border-bottom: 2.8px solid #1967d2;
+    color: #1967d2;
+}
+
+.userSection {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #89a2c5;
+    margin-right: 10px;
+}
+
+.registerBtn {
+    background-color: #1967d2;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
