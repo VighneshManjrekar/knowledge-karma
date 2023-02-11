@@ -1,0 +1,73 @@
+.login_home {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+    grid-template-rows: 1fr;
+}
+
+.login_bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    width: 100%;
+    /* background: linear-gradient(to right,#e570fa, rgb(250, 188, 250), white, transparent ); */
+}
+
+.loginFormComponent {
+    margin-left: 100px;
+    /* background-color: white; */
+    padding: 30px;
+    border-radius: 18px;
+}
+
+.loginForm {
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: -100px;
+    /* background:linear-gradient( to left, rgb(167, 81, 248), rgb(192, 137, 244), rgb(222, 191, 252), transparent); */
+}
+
+.login_bar .loginBack2_Img {
+    z-index: 2;
+    width: 100%;
+}
+
+#darkImgx {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+}
+
+#lightImgx {
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+}
+
+
+
+@media (max-width: 700px) {
+    .login_home {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 4fr;
+    }
+
+    .loginForm {
+        margin-top: 0px;
+        /* background: white; */
+        height: 90%;
+    }
+
+    .loginFormComponent {
+        margin-top: -200px;
+        background: transparent;
+        padding: 8px;
+        border-width: 0px;
+        box-shadow: 0px 0px 0px white;
+    }
+
+    .login_bar .loginBack2_Img {
+        width: 50%;
+    }
+}
