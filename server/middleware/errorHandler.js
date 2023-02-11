@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
   // duplicate value error
   if (error.code == 11000) {
     error.message = `Entered ${[Object.keys(error.keyPattern)]} already exists`;
-    if ((error.keyPattern.user == error.keyPattern.user) == 1) {
+    if (Object.keys(error.keyPattern).length > 1) {
       error.message =
         "One user can only write single review on an each resouruce";
     }
