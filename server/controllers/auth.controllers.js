@@ -93,10 +93,12 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   if (!req.user) {
     return next(new ErrorResponse("Unauthorized!", 401));
   }
-  const user = await Res.find({
-    owner: req.user._id,
-  }).populate("owner", "name email");
-  res.status(200).json({ success: true, data: user });
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return next(new ErrorResponse("User not found", 404));
+  }
+  const products = await Res.find({ owner: user._id });
+  res.status(200).json({ success: true, user, products });
 });
 
 // @desc    Logout user
