@@ -3,7 +3,7 @@ const router = require("express").Router();
 const {
   register,
   login,
-  getUser,
+  getProfile,
   forgotPassword,
   resetPassword,
   logout,
@@ -18,6 +18,6 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:id/:token", resetPassword);
 
 // protected routes
-router.get("/profile", protect, getUser);
+router.get("/profile", protect, getProfile);
 
 module.exports = router;

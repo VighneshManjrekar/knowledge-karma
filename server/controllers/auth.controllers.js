@@ -1,5 +1,6 @@
 const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/user.model");
+const Res = require("../models/res.model");
 const ErrorResponse = require("../utils/errorResponse");
 const sendMail = require("../utils/mail");
 
@@ -88,11 +89,13 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 // @desc    Get signed in user profile
 // @route   GET api/auth/profile
 // @access  Private
-exports.getUser = asyncHandler(async (req, res, next) => {
+exports.getProfile = asyncHandler(async (req, res, next) => {
   if (!req.user) {
     return next(new ErrorResponse("Unauthorized!", 401));
   }
-  const user = await User.findById(req.user);
+  const user = await Res.find({
+    owner: req.user._id,
+  }).populate("owner", "name email");
   res.status(200).json({ success: true, data: user });
 });
 
