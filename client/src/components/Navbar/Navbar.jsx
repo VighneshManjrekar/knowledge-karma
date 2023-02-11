@@ -1,10 +1,12 @@
 import React from "react";
 import styles from './Navbar.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 
 const Navbar = ({ changeTab, currentTab }) => {
-    const user = true;
+
+    const { user } = useSelector(state => state.auth)
     return (
         <div className={styles.navWrapper}>
             <div className={styles.logo}>KnowledgeKarma</div>
@@ -20,13 +22,13 @@ const Navbar = ({ changeTab, currentTab }) => {
                 </div>
             </div>
             {
-                user ? (<button className={styles.registerBtn}>
-                    Login
-                </button>) : (
+                user ? (
                     <div className={styles.userSection}>
 
                     </div>
-                )
+                ) : (<button className={styles.registerBtn}>
+                    Login
+                </button>)
             }
         </div>
     );

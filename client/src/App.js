@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import authService from './features/auth/authService';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './features/auth/authSlice';
@@ -36,24 +37,21 @@ function App() {
   useEffect(() => {
 
     const checkSession = async () => {
-      if (!user) {
-        const userData = await authService.getLoginUser();
-        // console.log(userData.success)
+      const userData = await authService.getLoginUser();
+      // console.log(userData.success)
 
-        if (userData.success) {
-          dispatch(setUser(userData.data))
-        } else {
-          console.log("User session expired")
-        }
+      if (userData.success) {
+        dispatch(setUser(userData.data))
+      } else {
+        console.log("User session expired")
       }
     }
 
-    checkSession()
-
-    return () => {
-
+    if (user === null) {
+      checkSession()
     }
-  }, [])
+
+  }, [user])
 
 
 
@@ -80,7 +78,7 @@ function App() {
       <Router>
         <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
         <Routes>
-          <Route path='/auth' element={<Auth />}>
+          <Route path='/' element={<Auth />}>
             <Route index={true} element={<Login />} />
             <Route path='signup' element={<SignUp />} />
           </Route>
@@ -88,8 +86,8 @@ function App() {
             <Route path='community' element={<CommunityTab />} />
             <Route path='contributers' element={<Contributors />} />
             <Route path='marketplace' element={<Marketplace />} />
-          </Route>
-          <Route path='/profile/:id' element={<Profile />} >
+            <Route path='profile' element={<Profile />} >
+            </Route>
           </Route>
         </Routes>
       </Router>

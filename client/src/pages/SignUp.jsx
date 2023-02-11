@@ -36,15 +36,6 @@ const theme = createTheme();
 
 export default function SignUp() {
     const dispatch = useDispatch()
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     console.log({
-    //         email: data.get('email'),
-    //         password: data.get('password'),
-    //     });
-    // };
-
 
     let navigate = useNavigate();
 
@@ -66,8 +57,7 @@ export default function SignUp() {
         const response = await authService.registerUser(data)
         console.log(response)
         if (response.success) {
-            dispatch(setUser(response.data))
-            navigate('/auth')
+            navigate('/')
         }
     }
 
@@ -91,7 +81,7 @@ export default function SignUp() {
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12}>
                                 <TextField
                                     autoComplete="given-name"
                                     name="name"
@@ -102,16 +92,6 @@ export default function SignUp() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    // required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"
                                 />
                             </Grid>
                             <Grid item xs={12}>
