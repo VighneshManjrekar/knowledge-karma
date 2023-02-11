@@ -11,23 +11,29 @@ const Navbar = () => {
         <div className={styles.navWrapper}>
             <div className={styles.logo}>KnowledgeKarma</div>
             <div className={styles.navTabs}>
-                <div className={`${styles.navTab} ${styles.active}`}>
-                    <span><Link to='/marketplace' style={{ textDecoration: 'none' }}>Marketplace</Link> </span>
-                </div>
-                <div className={`${styles.navTab}`}>
-                    <span><Link to='/community' style={{ textDecoration: 'none' }}>Community</Link> </span>
-                </div>
-                <div className={`${styles.navTab}`}>
-                    <span><Link to='/contributers' style={{ textDecoration: 'none' }}>Contributers</Link> </span>
-                </div>
+                <span>
+                    <Link to='/marketplace' style={{ textDecoration: 'none' }}>
+                        <div className={`${styles.navTab} ${styles.active}`}>Marketplace</div>
+                    </Link> 
+                </span>
+                <span>   
+                    <Link to='/community' style={{ textDecoration: 'none' }}> 
+                       <div className={`${styles.navTab}`}>Community</div>
+                    </Link>                
+                </span>
+                <span>
+                    <Link to='/contributers' style={{ textDecoration: 'none' }}> 
+                       <div className={`${styles.navTab}`}>Contributers</div>
+                    </Link>
+                </span>
             </div>
             {
                 user ? (
                     <div className={styles.userSection}>
-
+                        
                     </div>
                 ) : (<button className={styles.registerBtn}>
-                    Login
+                    <Link to='/'>Login</Link>
                 </button>)
             }
         </div>
