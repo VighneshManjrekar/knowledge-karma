@@ -27,6 +27,9 @@ export const getProduct = (id) => api.get(`/api/resources/${id}`)
 export const createProduct = (data) => api.post("/api/resources", data)
 export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
 
+//Reviews 
+export const getReviews = (id) => api.get(`/api/resources/${id}/reviews`)
+
 
 //Ranking
 export const getRanking = () => api.get("/api/auth/ranking")

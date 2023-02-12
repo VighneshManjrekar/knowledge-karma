@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import productService from "../features/product/productService";
 import { useDispatch } from "react-redux"
 import { setProducts } from "../features/product/productSlice";
-import { getResources, updateResources } from "../http";
+import { getResources, getReviews, updateResources } from "../http";
 import { Navigate } from "react-router-dom";
 
 const Admin = () => {
@@ -46,8 +46,9 @@ const Admin = () => {
         setCurrentProducts(newProducts)
     }
 
-    const handleReject = (id) => {
-
+    const handleReject = async (id) => {
+        const response = await getReviews("63e7cc15a63ceb91ee276803");
+        console.log(response.data)
     }
 
     return <>
