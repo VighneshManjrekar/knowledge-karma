@@ -8,7 +8,7 @@ const sendMail = require("../utils/mail");
 // @route   GET api/admin/resources
 // @access  Private/Admin
 exports.getResources = asyncHandler(async (req, res, next) => {
-  const resources = await Res.find();
+  const resources = await Res.find({ status: false });
   res.status(200).json({ success: true, data: resources });
 });
 
@@ -16,11 +16,11 @@ exports.getResources = asyncHandler(async (req, res, next) => {
 // @route   PUT api/admin/resources/:resourceId
 // @access  Private/Admin
 exports.updateResources = asyncHandler(async (req, res, next) => {
-  const { status } = req.body;
+  // const { status } = req.body;
   const { resourceId } = req.params;
   const updatedRes = await Res.findOneAndUpdate(
     { _id: resourceId },
-    { status },
+    { status: true },
     { new: true, runValidators: true }
   );
   if (!updatedRes) {

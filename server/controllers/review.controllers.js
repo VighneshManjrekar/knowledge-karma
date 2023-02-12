@@ -63,6 +63,7 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.deleteReview = asyncHandler(async (req, res, next) => {
   const { resourceId, reviewId } = req.params;
+  console.log(resourceId, reviewId)
   const review = await Review.findOneAndDelete({
     _id: reviewId,
     user: req.user._id,
