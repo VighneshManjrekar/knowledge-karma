@@ -8,7 +8,8 @@ import Drawer from "../components/Drawer";
 export default function Marketplace() {
   return (
     <div>
-        <h1>Marketplace</h1>
+      <h1 style={{ fontSize: 30, margin: 10 }}>Marketplace</h1>
+      <Drawer />
         <ProductContainer />
     </div>
   )
