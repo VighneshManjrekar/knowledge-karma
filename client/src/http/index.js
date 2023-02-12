@@ -29,7 +29,7 @@ export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
 
 //Reviews 
 export const getReviews = (id) => api.get(`/api/resources/${id}/reviews`)
-
+export const deleteReview = (resourceId, reviewId) => api.delete(`/api/resources/${resourceId}/reviews/${reviewId}`)
 
 //Ranking
 export const getRanking = () => api.get("/api/auth/ranking")

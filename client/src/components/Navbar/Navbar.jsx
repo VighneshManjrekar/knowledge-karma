@@ -2,10 +2,12 @@ import React from "react";
 import styles from './Navbar.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = () => {
     const location = useLocation()
+    const navigate = useNavigate()
 
     const { user } = useSelector(state => state.auth)
     return (
@@ -30,8 +32,8 @@ const Navbar = () => {
             </div>
             {
                 user ? (
-                    <div className={styles.userSection}>
-
+                    <div className={`${styles.userSection} hover:cursor-pointer flex items-center justify-center`} onClick={() => navigate('/profile')}>
+                        <span className="font-semibold text-2xl text-white">{user.name.charAt(0).toUpperCase()}</span>
                     </div>
                 ) : (<button className={styles.registerBtn}>
                     <Link to='/'>Login</Link>

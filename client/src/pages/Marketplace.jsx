@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { getAllProducts } from '../http';
 import SideBar from '../components/Product/SideBar';
 import ProductCard from '../components/Product/ProductCard';
+import Drawer from "../components/Drawer"
 
 
 
@@ -24,8 +25,10 @@ export default function Marketplace() {
     <div>
       {/* <h1>Marketplace</h1> */}
       <div className="w-full flex">
-        <SideBar />
-        <div className="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-9/12 gap-2">
+        {/* <SideBar /> */}
+        <Drawer />
+
+        <div className="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-9/12 gap-2 mt-10">
 
           {
             products.map((product, index) => {

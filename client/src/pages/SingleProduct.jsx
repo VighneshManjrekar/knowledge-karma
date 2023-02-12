@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProduct } from "../http";
+import { deleteReview, getProduct, getReviews } from "../http";
+import { useSelector } from "react-redux";
 
 const SingleProduct = () => {
+    const { user } = useSelector(state => state.auth)
     const { id } = useParams()
     const [singleProduct, setSingleProduct] = useState({})
+    const [productReviews, setProductReviews] = useState([])
 
     useEffect(() => {
         const fetchSingleProduct = async () => {
             const response = await getProduct(id)
-            // console.table(response.data.data)
+            // console.log(response.data.data)
             setSingleProduct(response.data.data)
         }
 
+        const fetchReviews = async () => {
+            const response = await getReviews(id);
+            // console.log(response.data.data)
+            setProductReviews(response.data.data)
+        }
+
         fetchSingleProduct()
+        fetchReviews()
     }, [])
+
+
+    const deleteCurrentReview = async (reviewId) => {
+        const response = await deleteReview(id, reviewId);
+    }
 
     return <div className="mt-10 w-full">
         <div className="py-6">
@@ -23,8 +38,8 @@ const SingleProduct = () => {
                 </img>
 
                 <div className="w-2/3 p-4 text-left relative">
-                    {/* <span class="absolute top-2 right-[120px] bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.upvote} Upvotes`}</span> */}
-                    {/* <span class="absolute top-2 right-2 bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.downvote} Downvote`}</span> */}
+                    {/* <span className="absolute top-2 right-[120px] bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.upvote} Upvotes`}</span> */}
+                    {/* <span className="absolute top-2 right-2 bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.downvote} Downvote`}</span> */}
 
                     <h1 className="text-gray-900 font-bold text-2xl">{singleProduct?.name}</h1>
                     <p className="mt-2 text-gray-600 text-sm">{singleProduct?.description}</p>
@@ -43,46 +58,47 @@ const SingleProduct = () => {
 
         {/* Reviews Section */}
         <div className="mx-auto flex max-w-[1000px] bg-white shadow-lg rounded-lg overflow-hidden">
-
-            <div class="relative overflow-x-auto w-full">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xsuppercase bg-gray-700 text-gray-100">
+            <div className="relative overflow-x-auto w-full">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xsuppercase bg-gray-700 text-gray-100">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" className="px-6 py-3">
                                 User Name
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" className="px-6 py-3">
+                                Title
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 Comment
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" className="px-6 py-3">
                                 Rating
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Delete
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td class="px-6 py-4">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque aut saepe quaerat? Optio, aliquid tempore laudantium dolor autem pariatur ducimus.
-                            </td>
-                            <td class="px-6 py-4">
-                                3
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td class="px-6 py-4">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque aut saepe quaerat? Optio, aliquid tempore laudantium dolor autem pariatur ducimus.
-                            </td>
-                            <td class="px-6 py-4">
-                                3
-                            </td>
-                        </tr>
-
+                        {productReviews.map((review, index) => {
+                            return <tr className="bg-white border-b" key={index}>
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                    {review.user.name}
+                                </th>
+                                <td className="px-6 py-4">
+                                    {review.title}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {review.text}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {review.rating}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {(review.user._id === user._id) && <button className="py-2 px-3 bg-red-400 rounded-md font-semibold text-white" onClick={() => deleteCurrentReview(review._id)}>Delete</button>}
+                                </td>
+                            </tr>
+                        })}
                     </tbody>
                 </table>
             </div>

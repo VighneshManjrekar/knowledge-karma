@@ -17,7 +17,7 @@ const Profile = () => {
         type: "",
         link: ""
     })
-    const [modalOpen, setModalOpen] = useState(true)
+    const [modalOpen, setModalOpen] = useState(false)
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -34,6 +34,7 @@ const Profile = () => {
 
         const response = await createProduct(formData)
         console.log(response.data)
+        setModalOpen(false)
 
     }
 

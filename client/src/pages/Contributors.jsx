@@ -104,28 +104,29 @@ const names = [{
 ]
 
 function MTable() {
-  // const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [people, setPeople] = useState(names);
+  // const [people, setPeople] = useState(names);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:55000/api/auth/ranking")
-  //     .then((response) => {
-  //       setPeople(response.data.names);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5500/api/auth/ranking")
+      .then((response) => {
+        setPeople(response.data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setIsLoading(false);
+      });
+  }, []);
 
 
 
-  const sortDescending = () => {
-    setPeople([...people].sort((a, b) => b.points - a.points));
-  };
+  // const sortDescending = () => {
+  //   setPeople([...people].sort((a, b) => b.points - a.points));
+  // };
+
   const classes = useStyles();
   const mystyle = {
     display: "flex",
