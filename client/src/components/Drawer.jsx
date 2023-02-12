@@ -67,7 +67,7 @@ export default function Drawer() {
   return (
     <div className='LeftDrawer'>
         <div className="DrawerBtn">
-            <Button onClick={toggleDrawer('left', true)} sx={{position:'absolute'}}>Filters</Button>
+            <Button onClick={toggleDrawer('left', true)} variant="outlined" sx={{position:'absolute', top:68}}>Filters</Button>
         </div>
         <React.Fragment key={'left'}>
           <SwipeableDrawer
