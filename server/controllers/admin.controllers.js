@@ -12,8 +12,33 @@ exports.getResources = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: resources });
 });
 
+// @desc    Update resources
+// @route   PUT api/admin/resources/:resourceId
+// @access  Private/Admin
 exports.updateResources = asyncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const resources = await Res.findOneAndUpdate({ _id: id }, { status: true });
-  res.status(200).json({ success: true, data: resources });
+  const { status } = req.body;
+  const { resourceId } = req.params;
+  const updatedRes = await Res.findOneAndUpdate(
+    { _id: resourceId },
+    { status },
+    { new: true, runValidators: true }
+  );
+  if (!updatedRes) {
+    return next(new ErrorResponse("Resource not found", 404));
+  }
+  res.status(200).json({ success: true, data: updatedRes });
+});
+
+// @desc    Delete resources
+// @route   DELETE api/admin/resources/:resourceId
+// @access  Private/Admin
+exports.deleteResources = asyncHandler(async (req, res, next) => {
+  const { resourceId } = req.params;
+  console.log(resourceId);
+  const resource = await Res.findOne({ _id: resourceId });
+  if (!resource) {
+    return next(new ErrorResponse("Resource not found", 404));
+  }
+  const deletedResource = await resource.remove();
+  res.status(200).json({ success: true, data: deletedResource });
 });

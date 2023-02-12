@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import authService from './features/auth/authService';

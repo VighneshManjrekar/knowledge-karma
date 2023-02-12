@@ -24,7 +24,7 @@ exports.createReview = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   const { title, text, rating, resource, user } = req.body;
   console.log(resource);
-  const resourceFound = await Res.findById(resource);
+  const resourceFound = await Res.findOne({ _id: resource, status: true });
   if (!resourceFound) {
     return next(new ErrorResponse(`No resource with id ${resource}`, 404));
   }
