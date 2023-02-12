@@ -1,0 +1,125 @@
+[
+  {
+    "_id": "63e8a5c204c4c89e70596978",
+    "name": "DSA Book",
+    "description": "DSA notes for placement by Devendra sir",
+    "branch": "COMP",
+    "year": "BE",
+    "subjectCode": "DSA",
+    "price": 0,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "BOOKS",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": true,
+    "owner": "63e8a5212e6c6d5c3b141fa0",
+    "image": "BOOKS-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005c8",
+    "name": "MECH Book for Maths",
+    "description": "Mechanical notes for placement Techmax",
+    "branch": "MECH",
+    "year": "FE",
+    "subjectCode": "ME001",
+    "price": 0,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "BOOKS",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": true,
+    "owner": "63e8a5272e6c6d5c3b141fa2",
+    "image": "BOOKS-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005c9",
+    "name": "Computer Network TechNeo",
+    "description": "Esse sit magna dolor pariatur deserunt laboris. In laboris deserunt officia aliqua id veniam cupidatat. Qui nostrud ex do reprehenderit nisi elit exercitation magna Lorem sint.",
+    "branch": "COMP",
+    "year": "TE",
+    "subjectCode": "CN003",
+    "price": 0,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "BOOKS",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": false,
+    "owner": "63e8a5272e6c6d5c3b141fa2",
+    "image": "BOOKS-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005d2",
+    "name": "Basic Electronics for civil",
+    "description": "Cillum adipisicing velit tempor exercitation duis et excepteur veniam esse magna. Dolor ut proident eu do laboris eiusmod voluptate velit cillum elit sit veniam. Eiusmod Lorem esse mollit nisi ut. Nulla pariatur labore velit ullamco proident reprehenderit. Ullamco pariatur qui reprehenderit proident velit officia mollit velit Lorem duis anim. Dolore id sit voluptate id. Pariatur Lorem ullamco laborum aute irure sunt voluptate quis.",
+    "branch": "CIVIL",
+    "year": "SE",
+    "subjectCode": "CC007",
+    "price": 300,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "NOTES",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": false,
+    "owner": "63e8a52c2e6c6d5c3b141fa4",
+    "image": "NOTES-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005d9",
+    "name": "Recommendation system",
+    "description": "Cillum adipisicing velit tempor exercitation duis et excepteur veniam esse magna. Dolor ut proident eu do laboris eiusmod voluptate velit cillum elit sit veniam. Eiusmod Lorem esse mollit nisi ut. Nulla pariatur labore velit ullamco proident reprehenderit. Ullamco pariatur qui reprehenderit proident velit officia mollit velit Lorem duis anim. Dolore id sit voluptate id. Pariatur Lorem ullamco laborum aute irure sunt voluptate quis.",
+    "branch": "COMP",
+    "year": "BE",
+    "subjectCode": "ML005",
+    "price": 5000,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "PROJECT",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": false,
+    "owner": "63e8a5312e6c6d5c3b141fa6"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005ca",
+    "name": "XYZ Building Architecture Drafts",
+    "description": "Cillum adipisicing velit tempor exercitation duis et excepteur veniam esse magna. Dolor ut proident eu do laboris eiusmod voluptate velit cillum elit sit veniam. Eiusmod Lorem esse mollit nisi ut. Nulla pariatur labore velit ullamco proident reprehenderit. Ullamco pariatur qui reprehenderit proident velit officia mollit velit Lorem duis anim. Dolore id sit voluptate id. Pariatur Lorem ullamco laborum aute irure sunt voluptate quis.",
+    "branch": "CIVIL",
+    "year": "BE",
+    "subjectCode": "CV005",
+    "price": 1000,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "PROJECT",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": true,
+    "owner": "63e8a5312e6c6d5c3b141fa6"
+  },
+  {
+    "_id": "63e8a0e8fc13ae6b380005cb",
+    "name": "IOT automation for home",
+    "description": "Cillum adipisicing velit tempor exercitation duis et excepteur veniam esse magna. Dolor ut proident eu do laboris eiusmod voluptate velit cillum elit sit veniam. Eiusmod Lorem esse mollit nisi ut. Nulla pariatur labore velit ullamco proident reprehenderit. Ullamco pariatur qui reprehenderit proident velit officia mollit velit Lorem duis anim. Dolore id sit voluptate id. Pariatur Lorem ullamco laborum aute irure sunt voluptate quis.",
+    "branch": "EXTC",
+    "year": "SE",
+    "subjectCode": "EL005",
+    "price": 10000,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "type": "PROJECT",
+    "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
+    "status": false,
+    "owner": "63e8a5372e6c6d5c3b141fa8"
+  }
+]

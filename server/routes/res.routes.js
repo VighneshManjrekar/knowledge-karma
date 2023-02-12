@@ -4,7 +4,6 @@ const reviewRoutes = require("./review.routes");
 
 const {
   getResources,
-  getAllResources,
   createResources,
   getResource,
   updateResources,

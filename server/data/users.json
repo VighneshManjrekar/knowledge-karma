@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "63e8a5212e6c6d5c3b141fa0",
+    "name": "Test User 1",
+    "email": "test01@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5272e6c6d5c3b141fa2",
+    "name": "Test User 2",
+    "email": "test02@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a52c2e6c6d5c3b141fa4",
+    "name": "Test User 3",
+    "email": "test03@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5312e6c6d5c3b141fa6",
+    "name": "Test User 4",
+    "email": "test04@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5372e6c6d5c3b141fa8",
+    "name": "Test User 5",
+    "email": "test05@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a53c2e6c6d5c3b141faa",
+    "name": "Test User 6",
+    "email": "test06@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5422e6c6d5c3b141fae",
+    "name": "Test User 7",
+    "email": "test07@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5472e6c6d5c3b141fb0",
+    "name": "Test User 8",
+    "email": "test08@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a54e2e6c6d5c3b141fb2",
+    "name": "Test User 9",
+    "email": "test09@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  },
+  {
+    "_id": "63e8a5542e6c6d5c3b141fb4",
+    "name": "Test User 10",
+    "email": "test10@mail.com",
+    "password": "1234",
+    "points": 0,
+    "profile": "profile-placeholder.jpg"
+  }
+]

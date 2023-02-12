@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Mind blowing DSA book",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "rating": 9,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "resource": "63e8a5c204c4c89e70596978",
+    "user": "63e8a5272e6c6d5c3b141fa2"
+  },
+  {
+    "title": "Ad nisi ullamco dolore dolore occaecat aliqua mollit in eu irure quis cillum deserunt in.",
+    "text": "Eu ut ad reprehenderit aliqua velit. Deserunt commodo pariatur ea eu enim commodo velit quis aliqua commodo proident dolor officia et. Voluptate culpa ex anim labore irure nulla fugiat irure occaecat labore.",
+    "rating": 5,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "resource": "63e8a5c204c4c89e70596978",
+    "user": "63e8a5542e6c6d5c3b141fb4"
+  },
+  {
+    "title": "Deserunt laboris sint cillum commodo et cillum velit cillum incididunt.",
+    "text": "Do deserunt dolor ad est commodo ex occaecat. Ipsum et cillum Lorem incididunt aliquip excepteur deserunt qui nisi nisi non. Elit fugiat fugiat nisi dolor velit anim incididunt eu ipsum commodo ipsum cillum dolore. Veniam voluptate ut et qui laboris. Veniam velit sit sunt incididunt id incididunt adipisicing laborum ullamco sit. Excepteur quis amet dolor eiusmod enim non cupidatat cillum sunt et sit excepteur et.",
+    "rating": 10,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "resource": "63e8a0e8fc13ae6b380005c8",
+    "user": "63e8a5542e6c6d5c3b141fb4"
+  },
+  {
+    "title": "Fugiat labore labore sint magna veniam ipsum pariatur minim ullamco est ipsum ea ad.",
+    "text": "Sunt magna consequat excepteur consequat et deserunt nostrud esse voluptate dolore aute quis. Et consequat elit aliqua incididunt. Id pariatur est sint aliquip reprehenderit do. In voluptate irure mollit eiusmod Lorem excepteur commodo. Eiusmod officia aute labore officia fugiat commodo Lorem.",
+    "rating": 7,
+    "votes": {
+      "upvote": 0,
+      "downvote": 0
+    },
+    "resource": "63e8a0e8fc13ae6b380005c9",
+    "user": "63e8a54e2e6c6d5c3b141fb2"
+  }
+]
