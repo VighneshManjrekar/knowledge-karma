@@ -11,3 +11,9 @@ exports.getResources = asyncHandler(async (req, res, next) => {
   const resources = await Res.find();
   res.status(200).json({ success: true, data: resources });
 });
+
+exports.updateResources = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const resources = await Res.findOneAndUpdate({ _id: id }, { status: true });
+  res.status(200).json({ success: true, data: resources });
+});

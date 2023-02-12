@@ -14,7 +14,7 @@ const { protect } = require("../middleware/authorization");
 router.use("/:resourceId/reviews", reviewRoutes);
 
 // Protected routes
-router.route("/").get(protect, getResources).post(protect, createResources);
+router.route("/").get(getResources).post(protect, createResources);
 router
   .route("/:id")
   .get(getResource)

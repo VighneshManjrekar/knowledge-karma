@@ -1,10 +1,11 @@
 import React from "react";
 import styles from './Navbar.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 
 const Navbar = () => {
+    const location = useLocation()
 
     const { user } = useSelector(state => state.auth)
     return (
@@ -13,24 +14,24 @@ const Navbar = () => {
             <div className={styles.navTabs}>
                 <span>
                     <Link to='/marketplace' style={{ textDecoration: 'none' }}>
-                        <div className={`${styles.navTab} ${styles.active}`}>Marketplace</div>
-                    </Link> 
-                </span>
-                <span>   
-                    <Link to='/community' style={{ textDecoration: 'none' }}> 
-                       <div className={`${styles.navTab}`}>Community</div>
-                    </Link>                
+                        <div className={`${styles.navTab} ${location.pathname === '/marketplace' ? styles.active : ''}`}>Marketplace</div>
+                    </Link>
                 </span>
                 <span>
-                    <Link to='/contributers' style={{ textDecoration: 'none' }}> 
-                       <div className={`${styles.navTab}`}>Contributers</div>
+                    <Link to='/community' style={{ textDecoration: 'none' }}>
+                        <div className={`${styles.navTab} ${location.pathname === '/community' ? styles.active : ''}`}>Community</div>
+                    </Link>
+                </span>
+                <span>
+                    <Link to='/contributers' style={{ textDecoration: 'none' }}>
+                        <div className={`${styles.navTab} ${location.pathname === '/contributers' ? styles.active : ''}`}>Contributers</div>
                     </Link>
                 </span>
             </div>
             {
                 user ? (
                     <div className={styles.userSection}>
-                        
+
                     </div>
                 ) : (<button className={styles.registerBtn}>
                     <Link to='/'>Login</Link>

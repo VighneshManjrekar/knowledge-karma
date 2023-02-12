@@ -3,8 +3,6 @@ import { getUser, login, register } from "../../http/index"
 
 // Register user
 const registerUser = async (data) => {
-
-
     const response = await register(data);
     console.log(response.data)
     return response.data

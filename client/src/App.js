@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import authService from './features/auth/authService';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from './features/auth/authSlice';
 import Navbar from './components/Navbar/Navbar';
+import Admin from './pages/Admin';
 import Marketplace from './pages/Marketplace';
 import Home from './components/Home';
 import CommunityTab from './pages/CommunityTab';
@@ -13,6 +14,7 @@ import Contributors from './pages/Contributors';
 import Auth from "./components/auth/Auth"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import SingleProduct from "./pages/SingleProduct";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -40,6 +42,7 @@ function App() {
       const userData = await authService.getLoginUser();
       // console.log(userData.success)
 
+
       if (userData.success) {
         dispatch(setUser(userData.user))
       } else {
@@ -47,11 +50,11 @@ function App() {
       }
     }
 
-    if (user === null) {
-      checkSession()
-    }
 
-  }, [user])
+    checkSession()
+
+
+  }, [])
 
 
 
@@ -86,13 +89,20 @@ function App() {
             <Route path='community' element={<CommunityTab />} />
             <Route path='contributers' element={<Contributors />} />
             <Route path='marketplace' element={<Marketplace />} />
-            <Route path='profile' element={<Profile />} >
-            </Route>
+            <Route path='profile' element={<Profile />} />
+            <Route path='/admin' element={<Admin />} />
           </Route>
+          <Route path='/product/:id' element={<SingleProduct />} />
         </Routes>
       </Router>
     </div>
   );
+}
+
+
+const Protected = () => {
+  const { user } = useSelector((state) => state.auth);
+  return user.role && user.role === "admin" ? <Outlet /> : <Navigate to={"/marketplace"} />
 }
 
 export default App;

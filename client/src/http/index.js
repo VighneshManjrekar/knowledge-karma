@@ -10,6 +10,25 @@ const api = axios.create({
 });
 
 
+//Auth Routes
 export const register = async (data) => await api.post("/api/auth/register", data)
 export const login = async (data) => await api.post("/api/auth/login", data)
 export const getUser = () => api.get("/api/auth/profile")
+
+
+//Admin Routes
+export const getResources = () => api.get("/api/admin/resources")
+export const updateResources = (id) => api.put(`/api/admin/resources/${id}`)
+
+
+//Products Routes
+export const getAllProducts = () => api.get("/api/resources")
+export const getProduct = (id) => api.get(`/api/resources/${id}`)
+export const createProduct = (data) => api.post("/api/resources", data)
+export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
+
+
+//Ranking
+export const getRanking = () => api.get("/api/auth/ranking")
+
+
