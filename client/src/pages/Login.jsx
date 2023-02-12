@@ -17,6 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import authService from "../features/auth/authService"
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import "../components/auth/auth.css";
 
 export default function Login() {
     let navigate = useNavigate();
@@ -48,12 +49,13 @@ export default function Login() {
             className="loginFormComponent mx-0 px-0"
             component="main"
             maxWidth="xs"
-            sx={{ bgcolor: "transparent" }}
+            sx={{ bgcolor: "transparent", margin:10 }}
         >
             <CssBaseline />
+            <div></div>
             <Box
                 sx={{
-                    marginTop: 8,
+                    margin: 1,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
