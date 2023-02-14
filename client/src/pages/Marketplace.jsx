@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ProductContainer from "../components/ProductContainer";
 import Container from '@mui/material/Container';
 import { getAllProducts } from '../http';
 import SideBar from '../components/Product/SideBar';
@@ -39,8 +38,6 @@ export default function Marketplace() {
         </div>
 
       </div>
-
-      {/* <ProductContainer /> */}
     </div>
   )
 }
