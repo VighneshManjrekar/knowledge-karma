@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { createProduct } from "../http";
+import { createProduct, getUser } from "../http";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+    const navigate = useNavigate()
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const { user } = useSelector(state => state.auth)
+    const [userProducts, setUserProducts] = useState([])
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -43,6 +46,15 @@ const Profile = () => {
             setEmail(user.email)
             setName(user.name)
         }
+
+
+        const getUserProducts = async () => {
+            const response = await getUser();
+            // console.log()
+            setUserProducts(response.data.products)
+        }
+
+        getUserProducts();
 
     }, [user])
 
@@ -142,10 +154,14 @@ const Profile = () => {
         <div className="w-full px-10">
             <h2 className="text-2xl font-bold">Shared Products</h2>
             <div className="grid grid-cols-1 gap-5 w-full my-5 md:grid-cols-2 xl:grid-cols-3">
+                {
+                    userProducts?.map((product, index) => {
+                        return <div key={index} className="hover:cursor-pointer h-20 bg-blue-100 text-blue-800 p-5 rounded-md" onClick={() => navigate(`/product/${product._id}`)}>{product?.name}</div>
+                    })
+                }
+                {/* <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
                 <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
-                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
-                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
-                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
+                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div> */}
             </div>
         </div>
         <hr className="my-6" />

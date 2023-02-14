@@ -110,7 +110,7 @@ function MTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5500/api/auth/ranking")
+      .get("http://localhost:7000/api/auth/ranking")
       .then((response) => {
         setPeople(response.data.data);
         setIsLoading(false);

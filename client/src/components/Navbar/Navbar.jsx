@@ -22,10 +22,11 @@ const Navbar = () => {
     const { user } = useSelector(state => state.auth)
 
 
-    const logoutUser = async () =>{
+    const logoutUser = async () => {
+        console.log("Test 1")
         // Log out User
         const response = await authService.logoutUser();
-        if(response.success){
+        if (response.success) {
             dispatch(reset());
             navigate('/');
         }
@@ -74,43 +75,43 @@ const Navbar = () => {
             </div>
             {
                 user ? (
-                    
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <div className={`${styles.userSection} hover:cursor-pointer flex items-center justify-center`} onClick={handleOpenUserMenu}>
-                                    <span className="font-semibold text-2xl text-white">{user.name.charAt(0).toUpperCase()}</span>
-                                </div>
-                            </Tooltip>
-                            <Menu
-                                    sx={{ mt: '45px' }}
-                                    id="menu-appbar"
-                                    anchorEl={anchorElUser}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorElUser)}
-                                    onClose={handleCloseUserMenu}
-                                >
-                                    <MenuItem  onClick={handleCloseUserMenu}>
-                                        <Link to={'/profile'} style={{ textDecoration: 'none' }}>
-                                            <Typography textAlign="center">{"Profile"}</Typography>
-                                        </Link>
-                                    </MenuItem>
-                                    <MenuItem onClick={[handleCloseUserMenu, logoutUser]}>
-                                        <Link to={'/'} style={{ textDecoration: 'none' }}> 
-                                           <Typography textAlign="center">{"Logout"}</Typography>
-                                        </Link>
-                                    </MenuItem>
-                            </Menu>
-                        </Box>
+
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <div className={`${styles.userSection} hover:cursor-pointer flex items-center justify-center`} onClick={handleOpenUserMenu}>
+                                <span className="font-semibold text-2xl text-white">{user.name.charAt(0).toUpperCase()}</span>
+                            </div>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Link to={'/profile'} style={{ textDecoration: 'none' }}>
+                                    <Typography textAlign="center">{"Profile"}</Typography>
+                                </Link>
+                            </MenuItem>
+                            <MenuItem onClick={logoutUser}>
+                                <Link to={'/'} style={{ textDecoration: 'none' }}>
+                                    <Typography textAlign="center">{"Logout"}</Typography>
+                                </Link>
+                            </MenuItem>
+                        </Menu>
+                    </Box>
                 ) : (
-                    <Link to='/' style={{ textDecoration:'none'}}>
+                    <Link to='/' style={{ textDecoration: 'none' }}>
                         <button className={styles.registerBtn}>Login</button>
                     </Link>
                 )

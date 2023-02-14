@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:5500',
+    baseURL: 'http://localhost:7000',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
@@ -27,6 +27,7 @@ export const getAllProducts = () => api.get("/api/resources")
 export const getProduct = (id) => api.get(`/api/resources/${id}`)
 export const createProduct = (data) => api.post("/api/resources", data)
 export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
+
 
 //Reviews 
 export const getReviews = (id) => api.get(`/api/resources/${id}/reviews`)
