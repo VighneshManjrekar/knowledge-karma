@@ -10,7 +10,7 @@ const registerUser = async (data) => {
 
 // Logout user
 const logoutUser = async () => {
-    console.log("Test 2")
+    // console.log("Test 2")
     const response = await logout();
     console.log(response.data);
     return response.data

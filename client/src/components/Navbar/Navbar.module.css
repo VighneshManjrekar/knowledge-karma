@@ -60,3 +60,39 @@
     border: none;
     cursor: pointer;
 }
+
+@media screen and (max-width:734px) {
+    .navWrapper {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .userSection {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .registerBtn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+
+@media screen and (max-width: 360px) {
+    .navTabs {
+        gap: 3px;
+    }
+
+    .navTab {
+        font-size: 14px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+}

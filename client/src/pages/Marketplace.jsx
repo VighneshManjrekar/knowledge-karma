@@ -13,7 +13,7 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await getAllProducts();
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setProducts(response.data.data)
     }
 
@@ -23,11 +23,11 @@ export default function Marketplace() {
   return (
     <div>
       {/* <h1>Marketplace</h1> */}
-      <div className="w-full flex">
+      <div className="w-full flex justify-center">
         {/* <SideBar /> */}
-        <Drawer />
+        {/* <Drawer /> */}
 
-        <div className="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-9/12 gap-2 mt-10">
+        <div className="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-9/12 gap-4 mt-10">
 
           {
             products.map((product, index) => {

@@ -26,7 +26,8 @@ export const updateResources = (id) => api.put(`/api/admin/resources/${id}`)
 export const getAllProducts = () => api.get("/api/resources")
 export const getProduct = (id) => api.get(`/api/resources/${id}`)
 export const createProduct = (data) => api.post("/api/resources", data)
-export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
+export const deleteUserResource = (id) => api.delete(`/api/resources/${id}`)
+export const updateUserResource = (id, data) => api.put(`/api/resources/${id}`, data)
 
 
 //Reviews 

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { createProduct, deleteUserResource, getUser } from "../http";
-import RecentResource from "../components/RecentResource";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { updateUserResource } from "../http";
 
-const Profile = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const { user } = useSelector(state => state.auth)
-    const [userProducts, setUserProducts] = useState([])
+
+
+const RecentResource = ({ product, handleDeleteResource }) => {
+    const navigate = useNavigate()
+    const handleUpdate = async (e, id) => {
+        await updateUserResource(id, formData)
+        setModalOpen(false)
+    }
+
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -19,60 +22,28 @@ const Profile = () => {
         link: ""
     })
     const [modalOpen, setModalOpen] = useState(false)
-    const handleSubmit = async (e) => {
-        e.preventDefault()
 
-        console.log(formData)
-
-        let hasNullValue = false;
-
-        for (const key in formData) {
-            if (formData[key] === null || !formData[key]) {
-                hasNullValue = true;
-                return
-            }
-        }
-
-        const response = await createProduct(formData)
-        console.log(response.data)
-        setModalOpen(false)
-
-    }
-
-    useEffect(() => {
-        if (user) {
-            setEmail(user.email)
-            setName(user.name)
-        }
-
-
-        const getUserProducts = async () => {
-            const response = await getUser();
-            // console.log()
-            setUserProducts(response.data.products)
-        }
-
-        getUserProducts();
-
-    }, [user])
-
-
-    const handleDeleteResource = async (e, id) => {
+    const updateResource = (product) => {
         // e.preventDefault()
-        const response = await deleteUserResource(id)
-        if (response.data.success) {
-            const newProducts = userProducts.filter((item) => {
-                return item._id !== id
-            })
-            setUserProducts(newProducts)
-        }
+        setModalOpen(true)
+        setFormData({
+            name: product.name,
+            description: product.description,
+            branch: product.branch,
+            year: product.year,
+            subjectCode: product.subjectCode,
+            price: product.price,
+            type: product.type,
+            link: product.link
+        })
+
     }
 
 
 
     return <>
         {
-            modalOpen && (<div className="absolute w-4/5  bg-gray-100 py-10 left-40 rounded-md">
+            modalOpen && (<div className="z-10 absolute w-4/5  bg-gray-100 py-10 left-40 rounded-md">
                 <form className="">
                     <div className="absolute right-4 top-3 hover:cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
@@ -135,52 +106,34 @@ const Profile = () => {
                         </div>
 
                     </div>
-                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={handleSubmit}>Create Resource</button>
+                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={(e) => handleUpdate(e, product._id)}>Update Resource</button>
                 </form>
             </div>)
         }
+        <div className="hover:cursor-pointer mx-auto flex bg-white shadow-lg rounded-lg overflow-hidden w-full">
+            {/* <img className="w-1/3" src={`${product.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : product.image}`}>
+            </img> */}
 
-        <div className="w-full mx-auto mt-20 flex flex-col justify-center items-center ">
-            <img className="w-35 h-35 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Bordered avatar" />
-            <span className="text-lg text-cyan-900 mt-5 text-center font-bold">{name}</span>
-            <span className="text-lg text-cyan-900 mt-2 text-center">{email}</span>
-
-            <div className="flex justify-center mt-10">
-                <span className="bg-blue-100 text-blue-800 text-lg font-medium mx-3 p-3 rounded-md text-center">
-                    <div>40</div>
-                    <span>Products</span>
-                </span>
-                <span className="bg-orange-100 text-orange-800 text-lg font-medium mx-3 p-3 rounded-md text-center">
-                    <div>40</div>
-                    <span>Products</span>
-                </span>
-                <span className="bg-green-100 text-green-800 text-lg font-medium mx-3 p-3 rounded-md text-center hover:cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
-                    <div>+</div>
-                    <span>Add Resource</span>
-                </span>
+            <div className="p-4 text-left relative">
+                <h1 onClick={() => navigate(`/product/${product._id}`)} className="text-gray-900 font-bold text-xl">{product?.name.length > 10 ? product.name.split(0, 10) : product.name}</h1>
+                <p className="mt-3 text-gray-600 text-sm">{product?.description.length > 40 ? product.description.slice(0, 40) + "..." : product.description}</p>
+                {/* <div className="mt-3 w-full">
+                <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${product.branch}`}</span>
+                <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${product.year}`}</span>
+                <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${product.type}`}</span>
+            </div> */}
+                {/* <div className="flex item-center justify-between mt-2">
+                    <h1 className="text-gray-700 font-bold text-sm">{`Price $ ${product.price}`}</h1>
+                    {product.price === 'free' ? <a download href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Download</a> : <a className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Buy Now</a>}
+                </div> */}
+                <div className="flex mt-3">
+                    <button className="px-3 py-2 bg-green-500 mr-2 text-white text-xs font-bold uppercase rounded" onClick={() => updateResource(product)} >Update</button>
+                    <button className="px-3 py-2 bg-red-500 text-white text-xs font-bold uppercase rounded" onClick={(e) => handleDeleteResource(e, product._id)} >Delete</button>
+                </div>
             </div>
         </div>
-        <hr className="my-6" />
-        <div className="w-full px-10">
-            <h2 className="text-2xl font-bold">Recent Resources</h2>
-            <div className="grid grid-cols-1 gap-5 w-full my-5 md:grid-cols-2 xl:grid-cols-3">
-                {
-                    userProducts?.map((product, index) => {
-                        return <RecentResource key={index} product={product} handleDeleteResource={handleDeleteResource} />
-                    })
-                }
-                {/* <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
-                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
-                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div> */}
-            </div>
-        </div>
-        <hr className="my-6" />
-        <div className="w-full px-10">
-            <h2 className="text-2xl font-bold">Overview</h2>
-            <div className="h-40 rounded-md my-10 bg-gray-400">
-            </div>
-        </div>
-    </>;
+    </>
+        ;
 };
 
-export default Profile;
+export default RecentResource;

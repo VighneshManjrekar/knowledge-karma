@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { deleteReview, getProduct, getReviews } from "../http";
 import { useSelector } from "react-redux";
+import ProductReview from "../components/ProductReview";
 
 const SingleProduct = () => {
     const { user } = useSelector(state => state.auth)
     const { id } = useParams()
     const [singleProduct, setSingleProduct] = useState({})
     const [productReviews, setProductReviews] = useState([])
+    const [isReview, setIsReview] = useState(false)
 
     useEffect(() => {
         const fetchSingleProduct = async () => {
@@ -22,6 +24,20 @@ const SingleProduct = () => {
             setProductReviews(response.data.data)
         }
 
+        const checkForReview = () => {
+            productReviews?.map(review => {
+                if (review.user._id === user._id) {
+                    // console.log(review.user._id, user._id)
+                    setIsReview(true)
+                    return
+                }
+            })
+
+            // setIsReview(false)
+        }
+
+        checkForReview()
+
         fetchSingleProduct()
         fetchReviews()
     }, [])
@@ -31,34 +47,69 @@ const SingleProduct = () => {
         const response = await deleteReview(id, reviewId);
     }
 
+    const setIsReviewFunc = (value) => {
+        if (value) {
+            setIsReview(value)
+        }
+    }
+
+    const setNewReviews = (reviewId) => {
+        const newReviews = productReviews?.filter(review => {
+            return review._id !== reviewId
+        })
+        setProductReviews(newReviews)
+    }
+
     return <div className="mt-10 w-full">
-        <div className="py-6">
-            <div className="mx-auto flex max-w-[1000px] bg-white shadow-lg rounded-lg overflow-hidden">
-                <img className="w-1/3 bg-cover" src={`${singleProduct.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : singleProduct.image}`}>
+        <div className="py-6 mx-2">
+            <div className="mx-auto flex md:max-w-[1000px] max-w-[500px] bg-white shadow-lg rounded-lg overflow-hidden flex-col md:flex-row">
+                <img className="w-full md:w-1/3 bg-cover" src={`${singleProduct.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : singleProduct.image}`}>
                 </img>
 
-                <div className="w-2/3 p-4 text-left relative">
-                    <span className="flex absolute top-2 right-[120px] text-green-400 text-xs font-medium mr-2 px-3 py-1.5 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+                <div className="w-full md:w-2/3 p-4 text-left relative">
+                    {/* <span className="flex absolute top-2 right-[120px] text-green-400 text-xs font-medium mr-2 px-3 py-1.5 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" className="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
                         <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
                     </svg> {`${singleProduct.votes.upvote}`} </span>
-                    <span className="absolute top-2 right-2 bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.downvote} Downvote`}</span>
+                    <span className="absolute top-2 right-2 bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${singleProduct.votes.downvote} Downvote`}</span> */}
 
                     <h1 className="text-gray-900 font-bold text-2xl">{singleProduct?.name}</h1>
                     <p className="mt-2 text-gray-600 text-sm">{singleProduct?.description}</p>
                     <div className="mt-3 w-full">
-                        <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${singleProduct.branch}`}</span>
-                        <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${singleProduct.year}`}</span>
-                        <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${singleProduct.type}`}</span>
+                        <span className="bg-gray-100 block md:inline-block text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${singleProduct.branch}`}</span>
+                        <span className="bg-gray-100 block md:inline-block text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${singleProduct.year}`}</span>
+                        <span className="bg-gray-100 block md:inline-block text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${singleProduct.type}`}</span>
                     </div>
                     <div className="flex item-center justify-between mt-5">
-                        <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${singleProduct.price}`}</h1>
-                        <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">{`${singleProduct.price === 'free' ? "Download" : "Buy Now"}`}</a>
+                        {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${singleProduct.price}`}</h1> */}
+                        <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Subscribe</a>
                     </div>
                 </div>
             </div>
         </div>
 
         {/* Reviews Section */}
+        {
+            productReviews.length > 0 ? (
+                <div className="md:mx-auto max-w-[500px] md:max-w-[1000px] mb-6 mx-2 mt-2">
+                    <div className="flex justify-between  mb-4">
+                        <h2 className="text-xl font-bold text-left">Reviews</h2>
+                        {isReview === false && <div className="py-1 px-3 text-md font-semibold text-white bg-orange-500 rounded-md hover:cursor-pointer">+ Review</div>}
+                    </div>
+                    <div className="grid w-full gap-4">
+                        {productReviews.map((review, index) => {
+                            return <ProductReview review={review} key={index} deleteCurrentReview={deleteCurrentReview} setIsReviewFunc={setIsReviewFunc} setNewReviews={setNewReviews} />
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <div className="mx-auto max-w-[1000px] mb-6 flex justify-center align-middle">
+                    <h2 className="text-xl font-bold text-left mb-4">No Reviews</h2>
+                </div>
+            )
+
+        }
+
+        {/* 
         <div className="mx-auto flex max-w-[1000px] bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="relative overflow-x-auto w-full">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -105,7 +156,7 @@ const SingleProduct = () => {
                 </table>
             </div>
 
-        </div>
+        </div> */}
     </div>;
 };
 

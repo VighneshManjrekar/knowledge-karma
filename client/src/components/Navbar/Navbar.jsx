@@ -23,7 +23,7 @@ const Navbar = () => {
 
 
     const logoutUser = async () => {
-        console.log("Test 1")
+        // console.log("Test 1")
         // Log out User
         const response = await authService.logoutUser();
         if (response.success) {
@@ -55,7 +55,7 @@ const Navbar = () => {
 
     return (
         <div className={styles.navWrapper}>
-            <div className={styles.logo}>KnowledgeKarma</div>
+            <div className={`${styles.logo} hover:cursor-pointer`} onClick={() => navigate('/marketplace')}>KnowledgeKarma</div>
             <div className={styles.navTabs}>
                 <span>
                     <Link to='/marketplace' style={{ textDecoration: 'none' }}>

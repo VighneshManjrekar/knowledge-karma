@@ -28,15 +28,15 @@ const ProductCard = ({ product }) => {
             {/* <span class="absolute top-2 right-2 bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${product.votes.downvote} Downvote`}</span> */}
 
             <h1 className="text-gray-900 font-bold text-2xl">{product?.name}</h1>
-            <p className="mt-2 text-gray-600 text-sm">{product?.description}</p>
+            {/* <p className="mt-2 text-gray-600 text-sm">{product?.description}</p> */}
             <div className="mt-3 w-full">
                 <span className="inline-block my-1 bg-orange-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${product.branch}`}</span>
                 <span className="inline-block my-1 bg-green-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${product.year}`}</span>
                 <span className="inline-block my-1 bg-red-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${product.type}`}</span>
             </div>
             <div className="flex item-center justify-between mt-3">
-                <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${product.price}`}</h1>
-                <a download href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">{`${product.price === 'free' ? "Download" : "Buy Now"}`}</a>
+                {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${product.price}`}</h1> */}
+                <a download href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Subscribe</a>
             </div>
         </div>
     </div>;
