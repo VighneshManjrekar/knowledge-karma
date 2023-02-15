@@ -1,4 +1,4 @@
-import { getUser, login, register } from "../../http/index"
+import { getUser, login, register, logout } from "../../http/index"
 
 
 // Register user
@@ -8,6 +8,13 @@ const registerUser = async (data) => {
     return response.data
 }
 
+// Logout user
+const logoutUser = async () => {
+    console.log("Test 2")
+    const response = await logout();
+    console.log(response.data);
+    return response.data
+}
 
 // Login user
 const loginUser = async (data) => {
@@ -16,6 +23,8 @@ const loginUser = async (data) => {
     console.log(response.data)
     return response.data
 }
+
+
 
 
 // Verify User Access Token
@@ -28,6 +37,7 @@ const authService = {
     registerUser,
     loginUser,
     getLoginUser,
+    logoutUser,
 }
 
 export default authService

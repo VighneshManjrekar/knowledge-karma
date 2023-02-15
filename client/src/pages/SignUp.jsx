@@ -62,7 +62,7 @@ export default function SignUp() {
     }
 
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} className="signUpForm">
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box

@@ -26,6 +26,7 @@ import {
   Route,
 } from "react-router-dom";
 import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 
 
 
@@ -92,6 +93,7 @@ function App() {
             <Route path='/admin' element={<Admin />} />
           </Route>
           <Route path='/product/:id' element={<SingleProduct />} />
+          <Route path='/*' element={<NotFound />} />
         </Routes>
       </Router>
     </div>

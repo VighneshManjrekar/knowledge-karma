@@ -21,8 +21,7 @@ export default function Auth() {
         <div>
             <Box className="login_home">
                 <Box
-                    className="login_bar mx-0 px-0"
-                    sx={{ bgcolor: "linear-gradient(blue, red)" }}
+                    className="login_bar"
                 >
                     <img src={loginImg} className="loginBack2_Img mx-0 px-0" alt="login here" />
                 </Box>

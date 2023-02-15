@@ -14,6 +14,7 @@ const api = axios.create({
 export const register = async (data) => await api.post("/api/auth/register", data)
 export const login = async (data) => await api.post("/api/auth/login", data)
 export const getUser = () => api.get("/api/auth/profile")
+export const logout = () => api.get("/api/auth/logout")
 
 
 //Admin Routes
@@ -26,6 +27,7 @@ export const getAllProducts = () => api.get("/api/resources")
 export const getProduct = (id) => api.get(`/api/resources/${id}`)
 export const createProduct = (data) => api.post("/api/resources", data)
 export const deleteProduct = (id) => api.delete(`/api/resources/${id}`)
+
 
 //Reviews 
 export const getReviews = (id) => api.get(`/api/resources/${id}/reviews`)
