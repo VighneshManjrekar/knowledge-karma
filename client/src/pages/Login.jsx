@@ -17,7 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import authService from "../features/auth/authService"
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
-import "../components/auth/auth.css";
+import "../components/Auth/auth.css";
 
 export default function Login() {
     let navigate = useNavigate();

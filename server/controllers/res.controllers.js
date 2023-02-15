@@ -6,8 +6,36 @@ const ErrorResponse = require("../utils/errorResponse");
 // @route   GET api/resources
 // @access  Private
 exports.getResources = asyncHandler(async (req, res, next) => {
-  const resources = await Res.find({ status: true });
-  res.status(200).json({ success: true, data: resources });
+  const branches = ["CHEM", "MECH", "COMP", "ELEC", "EXTC", "CIVIL", "OTHER"];
+  if (req.query.price && req.query.price === "Free") {
+    req.query.price = 0;
+  } else if (req.query.price && req.query.price === "Paid") {
+    req.query.price = { $gt: 0 };
+  } else {
+    delete req.query.price;
+  }
+  if (req.query.branch && !branches.includes(req.query.branch.toUpperCase()))
+    delete req.query.branch;
+  const queryParams = { ...req.query, status: true };
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 9;
+  const startId = (page - 1) * limit;
+  const endId = page * limit;
+  const query = await Res.find(queryParams).skip(startId).limit(limit);
+  const total = await Res.countDocuments();
+  const pagination = { total };
+  if (endId < total) {
+    pagination.next = page + 1;
+    pagination.limit = limit;
+  }
+  if (startId > 0) {
+    pagination.prev = page - 1;
+    pagination.limit = limit;
+  }
+  const results = await query;
+  res
+    .status(200)
+    .json({ success: true, count: results.length, pagination, data: results });
 });
 
 // @desc    Get single resource
