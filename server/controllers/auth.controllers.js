@@ -93,17 +93,22 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   if (!req.user) {
     return next(new ErrorResponse("Unauthorized!", 401));
   }
-  const user = await User.findById(req.user._id);
+  const user = await req.user.populate(
+    "resourceSubscribed",
+    "name branch year votes link"
+  );
   if (!user) {
     return next(new ErrorResponse("User not found", 404));
   }
-  const products = await Res.find({ owner: user._id });
+  const products = await Res.find({ owner: user._id }).select(
+    "name branch year votes link"
+  );
   res.status(200).json({ success: true, user, products });
 });
 
 // @desc    Logout user
 // @route   GET api/auth/logout
-// @access  Public
+// @access  Private
 exports.logout = asyncHandler(async (req, res, next) => {
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
@@ -116,9 +121,41 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route   GET api/auth/ranking
 // @access  Public
 exports.getRanking = asyncHandler(async (req, res, next) => {
-  const users = await User.find()
-    .sort({ points: -1 })
-    .limit(10);
+  const users = await User.find().sort({ points: -1 }).limit(10);
   const filteredUsers = users.filter((user) => user._doc.role !== "admin");
   res.status(200).json({ success: true, data: filteredUsers });
+});
+
+// @desc    Subscribe resource
+// @route   GET api/auth/subscribe/:resourceId
+// @access  Private
+exports.subscribeResource = asyncHandler(async (req, res, next) => {
+  const { resourceId } = req.params;
+  const resource = await Res.findById(resourceId);
+  if (resource.owner.toString() == req.user._id) {
+    return next(
+      new ErrorResponse("You cannot subscribe your own resource", 400)
+    );
+  }
+  const subscribe = await req.user.subscribe(resourceId);
+  if (!subscribe) {
+    return next(new ErrorResponse("Resource already subscribed", 400));
+  }
+  res.status(200).json({ success: true, data: subscribe });
+});
+
+// @desc    Unsubscribe resource
+// @route   GET api/auth/unsubscribe/:resourceId
+// @access  Private
+exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
+  const { resourceId } = req.params;
+  const resource = await Res.findById(resourceId);
+  if (!resource) {
+    return next(new ErrorResponse("Resource does not exists", 404));
+  }
+  const unsubscribe = await req.user.unsubscribe(resource._id);
+  if (!unsubscribe) {
+    return next(new ErrorResponse("Resource not subscribed", 400));
+  }
+  res.status(200).json({ success: true, data: unsubscribe });
 });

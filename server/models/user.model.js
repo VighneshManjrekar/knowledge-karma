@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "profile-placeholder.jpg",
   },
+  resourceSubscribed: [{ type: mongoose.Schema.ObjectId, ref: "Resource" }],
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -37,8 +38,10 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
   next();
 });
 
@@ -64,5 +67,22 @@ userSchema.methods.createResetPassLink = function () {
 userSchema.methods.verifyResetToken = function (token) {
   const secret = process.env.JWT_SECRET + this.password;
   return jwt.verify(token, secret);
+};
+userSchema.methods.subscribe = function (resourceId) {
+  if (this.resourceSubscribed.includes(resourceId)) {
+    return false;
+  }
+  this.resourceSubscribed.push(resourceId);
+  return this.save();
+};
+userSchema.methods.unsubscribe = function (resourceId) {
+  if (!this.resourceSubscribed.includes(resourceId)) {
+    return false;
+  }
+  const newResourceSubscribed = this.resourceSubscribed.filter((resource) => {
+    return resource.toString() !== resourceId.toString();
+  });
+  this.resourceSubscribed = newResourceSubscribed;
+  return this.save();
 };
 module.exports = mongoose.model("User", userSchema);

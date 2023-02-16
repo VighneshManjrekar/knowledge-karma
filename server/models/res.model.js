@@ -26,10 +26,6 @@ const resourceSchema = new mongoose.Schema({
     required: [true, "Please enter year from FE/SE/TE/BE"],
   },
   subjectCode: String,
-  price: {
-    type: Number,
-    required: [true, "Please add price"],
-  },
   votes: {
     upvote: {
       type: Number,
@@ -42,10 +38,10 @@ const resourceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["NOTES", "BOOKS", "PROJECT", "ASSIGNMENT"],
+    enum: ["NOTES", "PROJECT", "ASSIGNMENT"],
     required: [
       true,
-      "Please enter resource type from NOTES/BOOKS/PROJECT/ASSIGNMENT",
+      "Please enter resource type from NOTES/PROJECT/ASSIGNMENT",
     ],
   },
   link: {

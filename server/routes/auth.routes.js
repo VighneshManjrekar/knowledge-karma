@@ -8,6 +8,8 @@ const {
   resetPassword,
   logout,
   getRanking,
+  subscribeResource,
+  unsubscribeResource,
 } = require("../controllers/auth.controllers");
 const { protect } = require("../middleware/authorization");
 
@@ -21,5 +23,7 @@ router.get("/ranking", getRanking);
 
 // protected routes
 router.get("/profile", protect, getProfile);
+router.get("/subscribe/:resourceId", protect, subscribeResource);
+router.get("/unsubscribe/:resourceId", protect, unsubscribeResource);
 
 module.exports = router;
