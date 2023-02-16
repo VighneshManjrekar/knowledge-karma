@@ -106,6 +106,23 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, user, products });
 });
 
+// @desc    Get public user profile
+// @route   GET api/auth/profile/:userId
+// @access  Private
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.userId).populate(
+    "resourceSubscribed",
+    "name branch year subscribers"
+  );
+  if (!user) {
+    return next(new ErrorResponse("User not found", 404));
+  }
+  const products = await Res.find({ owner: user._id, status: true }).select(
+    "name branch year votes description subjectCode createdAt"
+  );
+  res.status(200).json({ success: true, user, products });
+});
+
 // @desc    Logout user
 // @route   GET api/auth/logout
 // @access  Private
@@ -145,7 +162,7 @@ exports.subscribeResource = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Resource already subscribed", 400));
   }
   const owner = await User.findById(resource.owner.toString());
-  owner.subscribers += 10;
+  owner.subscribers += 1;
   await owner.save();
   res.status(200).json({ success: true, data: subscribe });
 });
@@ -164,7 +181,7 @@ exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Resource not subscribed", 400));
   }
   const owner = await User.findById(resource.owner);
-  owner.subscribers -= 10;
+  owner.subscribers -= 1;
   await owner.save();
   res.status(200).json({ success: true, data: unsubscribe });
 });

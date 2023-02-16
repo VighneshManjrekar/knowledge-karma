@@ -75,7 +75,7 @@ resourceSchema.pre("remove", async function (next) {
     { resourceSubscribed: this._id },
     { $pull: { resourceSubscribed: this._id } }
   );
-  const updatedScore = userUpdated.modifiedCount * 10;
+  const updatedScore = userUpdated.modifiedCount;
   const owner = await this.model("User").findById(this.owner);
   owner.subscribers -= updatedScore;
   await owner.save();
