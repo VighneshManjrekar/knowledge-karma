@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import authService from './features/auth/authService';
@@ -10,7 +10,7 @@ import Marketplace from './pages/Marketplace';
 import Home from './components/Home';
 import CommunityTab from './pages/CommunityTab';
 import Contributors from './pages/Contributors';
-import Auth from "./components/Auth/Auth" 
+import Auth from "./components/auth/Auth"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import SingleProduct from "./pages/SingleProduct";
@@ -31,8 +31,6 @@ import NotFound from './pages/NotFound';
 
 
 function App() {
-  // const [currentTab, setCurrentTab] = useState('marketplace')
-
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
@@ -40,11 +38,15 @@ function App() {
 
     const checkSession = async () => {
       const userData = await authService.getLoginUser();
-      // console.log(userData.success)
+      // console.log(userData)
+
+      const subscribedRes = userData.user.resourceSubscribed
+      let subscribedResList = []
+      subscribedRes?.map(res => subscribedResList.push(res._id))
 
 
       if (userData.success) {
-        dispatch(setUser(userData.user))
+        dispatch(setUser({ ...userData.user, userSubscribedRes: subscribedResList }))
       } else {
         console.log("User session expired")
       }
