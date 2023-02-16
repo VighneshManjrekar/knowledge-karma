@@ -1,39 +1,37 @@
 [
   {
     "_id": "63e8a5c204c4c89e70596978",
-    "name": "DSA Book",
-    "description": "DSA notes for placement by Devendra sir",
+    "name": "DSA notes",
+    "description": "Culpa ullamco laboris incididunt amet ad cupidatat cillum labore culpa dolore reprehenderit ea esse nulla. Amet veniam mollit magna tempor occaecat proident. Minim minim officia esse cupidatat id adipisicing deserunt dolor amet dolore pariatur deserunt.",
     "branch": "COMP",
     "year": "BE",
     "subjectCode": "DSA",
-    "price": 0,
     "votes": {
       "upvote": 0,
       "downvote": 0
     },
-    "type": "BOOKS",
+    "type": "NOTES",
     "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
     "status": true,
     "owner": "63e8a5212e6c6d5c3b141fa0",
-    "image": "BOOKS-placeholder.jpg"
+    "image": "NOTES-placeholder.jpg"
   },
   {
     "_id": "63e8a0e8fc13ae6b380005c8",
-    "name": "MECH Book for Maths",
-    "description": "Mechanical notes for placement Techmax",
+    "name": "MECH notes for Maths",
+    "description": "Esse sit magna dolor pariatur deserunt laboris. In laboris deserunt officia aliqua id veniam cupidatat. Qui nostrud ex do reprehenderit nisi elit exercitation magna Lorem sint.",
     "branch": "MECH",
     "year": "FE",
     "subjectCode": "ME001",
-    "price": 0,
     "votes": {
       "upvote": 0,
       "downvote": 0
     },
-    "type": "BOOKS",
+    "type": "NOTES",
     "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
     "status": true,
     "owner": "63e8a5272e6c6d5c3b141fa2",
-    "image": "BOOKS-placeholder.jpg"
+    "image": "NOTES-placeholder.jpg"
   },
   {
     "_id": "63e8a0e8fc13ae6b380005c9",
@@ -47,11 +45,11 @@
       "upvote": 0,
       "downvote": 0
     },
-    "type": "BOOKS",
+    "type": "ASSIGNMENT",
     "link": "https://drive.google.com/drive/u/0/folders/178reWxyiZQ5ib578dWbH-OToBZlOj2Z0",
     "status": false,
     "owner": "63e8a5272e6c6d5c3b141fa2",
-    "image": "BOOKS-placeholder.jpg"
+    "image": "ASSIGNMENT-placeholder.jpg"
   },
   {
     "_id": "63e8a0e8fc13ae6b380005d2",

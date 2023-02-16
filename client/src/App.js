@@ -10,7 +10,7 @@ import Marketplace from './pages/Marketplace';
 import Home from './components/Home';
 import CommunityTab from './pages/CommunityTab';
 import Contributors from './pages/Contributors';
-import Auth from "./components/auth/Auth"
+import Auth from "./components/Auth/Auth" 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import SingleProduct from "./pages/SingleProduct";
