@@ -131,7 +131,7 @@ exports.getRanking = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.subscribeResource = asyncHandler(async (req, res, next) => {
   const { resourceId } = req.params;
-  const resource = await Res.findById(resourceId);
+  const resource = await Res.findOne({ _id: resourceId, status: true });
   if (resource.owner.toString() == req.user._id) {
     return next(
       new ErrorResponse("You cannot subscribe your own resource", 400)
@@ -149,7 +149,7 @@ exports.subscribeResource = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
   const { resourceId } = req.params;
-  const resource = await Res.findById(resourceId);
+  const resource = await Res.findOne({ _id: resourceId, status: true });
   if (!resource) {
     return next(new ErrorResponse("Resource does not exists", 404));
   }

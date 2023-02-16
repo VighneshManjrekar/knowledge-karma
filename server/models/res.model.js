@@ -71,6 +71,11 @@ const resourceSchema = new mongoose.Schema({
 
 resourceSchema.pre("remove", async function (next) {
   await this.model("Review").deleteMany({ resource: this._id });
+  await this.model("User").updateMany(
+    { resourceSubscribed: this._id },
+    { $pull: { resourceSubscribed: this._id } }
+  );
+
   next();
 });
 

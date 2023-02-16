@@ -43,7 +43,10 @@ exports.getResources = asyncHandler(async (req, res, next) => {
 // @access  Public
 exports.getResource = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const resource = await Res.findOne({ _id: id });
+  const resource = await Res.findOne({ _id: id }).populate(
+    "owner",
+    "name email profile"
+  );
   if (!resource) return next(new ErrorResponse(`Resource not found`, 404));
   res.status(200).json({ success: true, data: resource });
 });
