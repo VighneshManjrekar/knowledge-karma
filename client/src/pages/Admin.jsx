@@ -4,13 +4,16 @@ import productService from "../features/product/productService";
 import { useDispatch } from "react-redux"
 import { setProducts } from "../features/product/productSlice";
 import { getResources, getReviews, updateResources } from "../http";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import authService from "../features/auth/authService";
+import { setUser } from "../features/auth/authSlice";
 
 const Admin = () => {
     const { products } = useSelector(state => state.resources)
     const { user } = useSelector(state => state.auth)
     const [currentProducts, setCurrentProducts] = useState([])
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
 
@@ -35,9 +38,41 @@ const Admin = () => {
         fetchResources()
 
 
+        if (user !== null) {
+
+            if ((user?.role)?.toString() !== "admin") {
+                navigate('/marketplace')
+            }
+        }
 
 
     }, [user])
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const userData = await authService.getLoginUser();
+            // console.log(userData)
+
+            const subscribedRes = userData.user.resourceSubscribed
+            let subscribedResList = []
+            subscribedRes?.map(res => subscribedResList.push(res._id))
+
+
+            if (userData.success) {
+                dispatch(setUser({ ...userData.user, userSubscribedRes: subscribedResList }))
+            } else {
+                console.log("User session expired")
+            }
+        }
+
+
+        checkSession()
+
+
+    }, [])
+
+
+
 
 
     const handleApprove = async (id) => {
