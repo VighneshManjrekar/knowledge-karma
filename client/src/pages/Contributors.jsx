@@ -25,8 +25,9 @@ export default function Contributors() {
     <div className='container mx-auto'>
       <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
         <div className="rankingTable col-span-12">
-          <table className="w-full border-collapse bg-transparent text-left text-sm text-gray-500">
+          <table className="w-full border-collapse bg-transparent text-left text-sm text-gray-600">
             <thead className='bg-gray-200'>
+              <th scope='col' className='px-6 py-4 text-2xl text-gray-900'>Rank🔥</th>
                 <th scope='col' className='px-6 py-4 text-2xl text-gray-900'>Account</th>
                 <th scope='col' className='px-6 py-4 text-2xl text-gray-900'>Name</th>
                 <th scope='col' className='px-6 py-4 text-2xl text-gray-900'>Email</th>
@@ -36,6 +37,7 @@ export default function Contributors() {
               {
                 users.map((user, index) =>(
                   <tr className='bg-gray-100 hover:bg-gray-50'>
+                    <td className="px-6 py-4"><div className='flex-align items-center text-center text-2xl'> <b> {index+1}</b> </div></td>
                     <td className="px-6 py-4">
                       <div className='flex-align items-center'> 
                           <div className={`${styles.userSection} hover:cursor-pointer hover:bg-slate-500 flex items-center justify-center`}>
