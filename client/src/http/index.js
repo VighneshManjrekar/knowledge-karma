@@ -40,5 +40,6 @@ export const getRanking = () => api.get("/api/auth/ranking")
 
 //Subscribe
 export const subscribe = (resourceId) => api.get(`/api/auth/subscribe/${resourceId}`)
+export const Unsubscribe = (resourceId) => api.get(`/api/auth/unsubscribe/${resourceId}`)
 
 

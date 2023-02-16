@@ -1,16 +1,35 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { subscribe } from "../../http";
-import { useSelector } from "react-redux";
+import { subscribe, Unsubscribe } from "../../http";
+import { useDispatch, useSelector } from "react-redux";
+import { changeRes, setUser } from "../../features/auth/authSlice";
 
 const ProductCard = ({ product }) => {
-    const { user } = useSelector(state => state.auth)
+    const { user, userSubscribedRes } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
     const handleSubscribe = async (resourceId) => {
         const response = await subscribe(resourceId)
+        const newSubscribedRes = [...userSubscribedRes, resourceId]
+
+        console.log(newSubscribedRes)
+        // const oldUser = user
+        // newSubscribedRes.push[]
+        dispatch(changeRes(newSubscribedRes))
+    }
+
+    const handleUnsubscribe = async (resourceId) => {
+        const response = await Unsubscribe(resourceId)
         console.log(response.data)
+
+        const newSubscribedRes = userSubscribedRes.filter(resource => {
+            return resource._id !== resourceId
+        })
+
+        dispatch(changeRes(newSubscribedRes))
+
     }
 
     // const product = {
@@ -46,7 +65,7 @@ const ProductCard = ({ product }) => {
                 {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${product.price}`}</h1> */}
                 {/* <a href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleSubscribe(product._id)}>Subscribe</a> */}
                 {
-                    (user?.userSubscribedRes)?.includes(product._id) ? <a href={`${product.link}`} className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded" >Subscribed</a> : <a href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleSubscribe(product._id)}>Subscribe</a>
+                    (userSubscribedRes)?.includes(product._id) ? <div className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleUnsubscribe(product._id)}>Subscribed</div> : <div className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleSubscribe(product._id)}>Subscribe</div>
                 }
             </div>
         </div>

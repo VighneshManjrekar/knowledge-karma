@@ -101,7 +101,7 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("User not found", 404));
   }
   const products = await Res.find({ owner: user._id }).select(
-    "name branch year votes link description subjectCode"
+    "name branch year votes link description createdAt subjectCode"
   );
   res.status(200).json({ success: true, user, products });
 });

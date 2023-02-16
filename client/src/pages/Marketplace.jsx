@@ -4,11 +4,12 @@ import { getAllProducts } from '../http';
 import SideBar from '../components/Product/SideBar';
 import ProductCard from '../components/Product/ProductCard';
 import Drawer from "../components/Drawer"
-
+import { useSelector } from 'react-redux';
 
 
 export default function Marketplace() {
   const [products, setProducts] = useState([])
+  const { user, userSubscribedRes } = useSelector(state => state.auth)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,7 +19,7 @@ export default function Marketplace() {
     }
 
     fetchProducts()
-  }, [])
+  }, [userSubscribedRes])
 
   return (
     <div>
