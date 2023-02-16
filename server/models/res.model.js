@@ -71,11 +71,14 @@ const resourceSchema = new mongoose.Schema({
 
 resourceSchema.pre("remove", async function (next) {
   await this.model("Review").deleteMany({ resource: this._id });
-  await this.model("User").updateMany(
+  const userUpdated = await this.model("User").updateMany(
     { resourceSubscribed: this._id },
     { $pull: { resourceSubscribed: this._id } }
   );
-
+  const updatedScore = userUpdated.modifiedCount * 10;
+  const owner = await this.model("User").findById(this.owner);
+  owner.subscribers -= updatedScore;
+  await owner.save();
   next();
 });
 

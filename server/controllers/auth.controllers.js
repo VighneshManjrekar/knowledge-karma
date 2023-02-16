@@ -101,7 +101,7 @@ exports.getProfile = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("User not found", 404));
   }
   const products = await Res.find({ owner: user._id }).select(
-    "name branch year votes link"
+    "name branch year votes link description subjectCode createdAt status"
   );
   res.status(200).json({ success: true, user, products });
 });
@@ -121,7 +121,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 // @route   GET api/auth/ranking
 // @access  Public
 exports.getRanking = asyncHandler(async (req, res, next) => {
-  const users = await User.find().sort({ points: -1 }).limit(10);
+  const users = await User.find().sort({ subscribers: -1 }).limit(10);
   const filteredUsers = users.filter((user) => user._doc.role !== "admin");
   res.status(200).json({ success: true, data: filteredUsers });
 });
@@ -132,6 +132,9 @@ exports.getRanking = asyncHandler(async (req, res, next) => {
 exports.subscribeResource = asyncHandler(async (req, res, next) => {
   const { resourceId } = req.params;
   const resource = await Res.findOne({ _id: resourceId, status: true });
+  if (!resource) {
+    return next(new ErrorResponse("Resource not found", 404));
+  }
   if (resource.owner.toString() == req.user._id) {
     return next(
       new ErrorResponse("You cannot subscribe your own resource", 400)
@@ -141,6 +144,9 @@ exports.subscribeResource = asyncHandler(async (req, res, next) => {
   if (!subscribe) {
     return next(new ErrorResponse("Resource already subscribed", 400));
   }
+  const owner = await User.findById(resource.owner.toString());
+  owner.subscribers += 10;
+  await owner.save();
   res.status(200).json({ success: true, data: subscribe });
 });
 
@@ -157,5 +163,8 @@ exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
   if (!unsubscribe) {
     return next(new ErrorResponse("Resource not subscribed", 400));
   }
+  const owner = await User.findById(resource.owner);
+  owner.subscribers -= 10;
+  await owner.save();
   res.status(200).json({ success: true, data: unsubscribe });
 });

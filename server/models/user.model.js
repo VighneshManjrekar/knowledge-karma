@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter a password"],
     select: false,
   },
-  points: {
+  subscribers: {
     type: Number,
     min: 0,
     default: 0,

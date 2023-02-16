@@ -8,17 +8,18 @@ const Profile = () => {
     const [email, setEmail] = useState('')
     const { user } = useSelector(state => state.auth)
     const [userProducts, setUserProducts] = useState([])
+    const [userSubscribedRes, setUserSubscribedRes] = useState([])
     const [formData, setFormData] = useState({
         name: "",
         description: "",
         branch: "",
         year: "",
         subjectCode: "",
-        price: 0,
         type: "",
         link: ""
     })
     const [modalOpen, setModalOpen] = useState(false)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -48,11 +49,15 @@ const Profile = () => {
 
         const getUserProducts = async () => {
             const response = await getUser();
-            // console.log()
+            // console.log(response.data.products)
             setUserProducts(response.data.products)
         }
 
         getUserProducts();
+
+
+        // console.log(user)
+        setUserSubscribedRes(user?.resourceSubscribed)
 
     }, [user])
 
@@ -72,8 +77,8 @@ const Profile = () => {
 
     return <>
         {
-            modalOpen && (<div className="absolute w-4/5  bg-gray-100 py-10 left-40 rounded-md">
-                <form className="">
+            modalOpen && (<div className="flex justify-center align-middle w-[100vw] h-[100vh]">
+                <form className=" relative w-4/5  bg-gray-100 py-10 rounded-md">
                     <div className="absolute right-4 top-3 hover:cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
@@ -111,10 +116,7 @@ const Profile = () => {
                                 <option value="BE">BE</option>
                             </select>
                         </div>
-                        <div>
-                            <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 text-left">Price</label>
-                            <input type="number" id="price" className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required name="price" value={formData.price} onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })} />
-                        </div>
+
                         <div>
                             <label htmlFor="subjectCode" className="block mb-2 text-sm font-medium text-gray-900 text-left">Subject Code</label>
                             <input type="text" id="subjectCode" className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required name="subjectCode" value={formData.subjectCode} onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })} />
@@ -166,6 +168,19 @@ const Profile = () => {
             <div className="grid grid-cols-1 gap-5 w-full my-5 md:grid-cols-2 xl:grid-cols-3">
                 {
                     userProducts?.map((product, index) => {
+                        return <RecentResource key={index} product={product} handleDeleteResource={handleDeleteResource} />
+                    })
+                }
+                {/* <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
+                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div>
+                <div className="h-20 bg-blue-100 text-blue-800 p-5 rounded-md">Hello</div> */}
+            </div>
+        </div>
+        <div className="w-full px-10">
+            <h2 className="text-2xl font-bold">Subscribed Resources</h2>
+            <div className="grid grid-cols-1 gap-5 w-full my-5 md:grid-cols-2 xl:grid-cols-3">
+                {
+                    userSubscribedRes?.map((product, index) => {
                         return <RecentResource key={index} product={product} handleDeleteResource={handleDeleteResource} />
                     })
                 }

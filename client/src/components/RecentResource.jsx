@@ -116,7 +116,7 @@ const RecentResource = ({ product, handleDeleteResource }) => {
 
             <div className="p-4 text-left relative">
                 <h1 onClick={() => navigate(`/product/${product._id}`)} className="text-gray-900 font-bold text-xl">{product?.name.length > 10 ? product.name.split(0, 10) : product.name}</h1>
-                <p className="mt-3 text-gray-600 text-sm">{product?.description.length > 40 ? product.description.slice(0, 40) + "..." : product.description}</p>
+                {/* <p className="mt-3 text-gray-600 text-sm">{product?.description.length > 40 ? product.description.slice(0, 40) + "..." : product.description}</p> */}
                 {/* <div className="mt-3 w-full">
                 <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${product.branch}`}</span>
                 <span className="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${product.year}`}</span>
