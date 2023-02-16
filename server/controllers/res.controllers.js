@@ -7,15 +7,17 @@ const ErrorResponse = require("../utils/errorResponse");
 // @access  Private
 exports.getResources = asyncHandler(async (req, res, next) => {
   const branches = ["CHEM", "MECH", "COMP", "ELEC", "EXTC", "CIVIL", "OTHER"];
-  if (req.query.price && req.query.price === "Free") {
-    req.query.price = 0;
-  } else if (req.query.price && req.query.price === "Paid") {
-    req.query.price = { $gt: 0 };
+  if (req.query.branch) {
+    const branchesRequested = req.query.branch.toUpperCase().split(",");
+    branchesRequested.forEach((branch) => {
+      if (!branches.includes(branch)) {
+        branchesRequested.pop(branch);
+      }
+    });
+    req.query.branch = { $in: branchesRequested };
   } else {
-    delete req.query.price;
-  }
-  if (req.query.branch && !branches.includes(req.query.branch.toUpperCase()))
     delete req.query.branch;
+  }
   const queryParams = { ...req.query, status: true };
   const page = +req.query.page || 1;
   const limit = +req.query.limit || 9;
