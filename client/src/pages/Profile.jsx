@@ -36,6 +36,7 @@ const Profile = () => {
 
         const response = await createProduct(formData)
         console.log(response.data)
+        setUserProducts(prev => [...prev, formData])
         setModalOpen(false)
 
     }
@@ -130,7 +131,6 @@ const Profile = () => {
                             <select id="type" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="type" value={formData.type} onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}>
                                 <option >Choose a type</option>
                                 <option value="NOTES">NOTES</option>
-                                <option value="BOOKS">BOOKS</option>
                                 <option value="PROJECT">PROJECT</option>
                                 <option value="ASSIGNMENT">ASSIGNMENT</option>
                             </select>
@@ -149,12 +149,12 @@ const Profile = () => {
 
             <div className="flex justify-center mt-10">
                 <span className="bg-blue-100 text-blue-800 text-lg font-medium mx-3 p-3 rounded-md text-center">
-                    <div>40</div>
-                    <span>Products</span>
+                    <div>{userSubscribedRes?.length}</div>
+                    <span>Subscribed Resorces</span>
                 </span>
                 <span className="bg-orange-100 text-orange-800 text-lg font-medium mx-3 p-3 rounded-md text-center">
-                    <div>40</div>
-                    <span>Products</span>
+                    <div>{userProducts?.length}</div>
+                    <span>Resoucres Owned</span>
                 </span>
                 <span className="bg-green-100 text-green-800 text-lg font-medium mx-3 p-3 rounded-md text-center hover:cursor-pointer" onClick={() => setModalOpen(!modalOpen)}>
                     <div>+</div>

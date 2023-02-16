@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import ProductReview from "../components/ProductReview";
 
 const SingleProduct = () => {
-    const { user } = useSelector(state => state.auth)
+    const { user, userSubscribedRes } = useSelector(state => state.auth)
     const { id } = useParams()
     const [singleProduct, setSingleProduct] = useState({})
     const [productReviews, setProductReviews] = useState([])
@@ -41,7 +41,7 @@ const SingleProduct = () => {
 
         fetchSingleProduct()
         fetchReviews()
-    }, [])
+    }, [user])
 
 
     const [formData, setFormData] = useState({
@@ -123,7 +123,7 @@ const SingleProduct = () => {
                         <div className="flex item-center justify-between mt-5">
                             {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${singleProduct.price}`}</h1> */}
                             {
-                                (user?.userSubscribedRes)?.includes(singleProduct._id) ? <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded">Subscribed</a> : <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Subscribe</a>
+                                (userSubscribedRes)?.includes(singleProduct._id) ? <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded">Subscribed</a> : <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Subscribe</a>
                             }
 
                         </div>

@@ -3,7 +3,7 @@ import './App.css';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import authService from './features/auth/authService';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from './features/auth/authSlice';
+import { changeRes, setUser } from './features/auth/authSlice';
 import Navbar from './components/Navbar/Navbar';
 import Admin from './pages/Admin';
 import Marketplace from './pages/Marketplace';
@@ -35,7 +35,6 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-
     const checkSession = async () => {
       const userData = await authService.getLoginUser();
       // console.log(userData)
@@ -46,11 +45,13 @@ function App() {
 
 
       if (userData.success) {
-        dispatch(setUser({ ...userData.user, userSubscribedRes: subscribedResList }))
+        dispatch(setUser(userData.user))
+        dispatch(changeRes(subscribedResList))
       } else {
         console.log("User session expired")
       }
     }
+
 
 
     checkSession()
