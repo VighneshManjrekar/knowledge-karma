@@ -82,16 +82,17 @@ const Admin = () => {
     }
 
     const handleReject = async (id) => {
-        const response = await getReviews("63e7cc15a63ceb91ee276803");
-        console.log(response.data)
+        const newProducts = currentProducts.filter((product) => product._id !== id)
+        setCurrentProducts(newProducts)
+        // return
     }
 
     return <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[1200px] mx-auto mt-10">
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
+                <thead className="text-xs uppercase  bg-gray-700 text-gray-400">
+                    <tr className=" bg-gray-700 text-gray-400">
                         <th scope="col" className="px-6 py-3">
                             Name
                         </th>
@@ -105,10 +106,10 @@ const Admin = () => {
                             Link
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            <span className="sr-only">Approve</span>
+                            Approve
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            <span className="sr-only">Reject</span>
+                            Reject
                         </th>
                     </tr>
                 </thead>
@@ -130,7 +131,7 @@ const Admin = () => {
                             <td className="px-6 py-4 text-right" onClick={() => handleApprove(product._id)}>
                                 <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Approve</a>
                             </td>
-                            <td className="px-6 py-4 text-right" onClick={(product) => handleReject(product._id)}>
+                            <td className="px-6 py-4 text-right" onClick={() => handleReject(product._id)}>
                                 <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Reject</a>
                             </td>
                         </tr>

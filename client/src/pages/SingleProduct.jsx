@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { createReview, deleteReview, getProduct, getReviews } from "../http";
+import { createReview, deleteReview, getProduct, getReviews, subscribe, Unsubscribe } from "../http";
 import { useSelector } from "react-redux";
 import ProductReview from "../components/ProductReview";
+import { changeRes } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const SingleProduct = () => {
     const { user, userSubscribedRes } = useSelector(state => state.auth)
@@ -11,6 +13,7 @@ const SingleProduct = () => {
     const [productReviews, setProductReviews] = useState([])
     const [isReview, setIsReview] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchSingleProduct = async () => {
@@ -41,7 +44,7 @@ const SingleProduct = () => {
 
         fetchSingleProduct()
         fetchReviews()
-    }, [user])
+    }, [user, userSubscribedRes])
 
 
     const [formData, setFormData] = useState({
@@ -49,6 +52,31 @@ const SingleProduct = () => {
         text: "",
         rating: 0
     })
+
+    const handleUnsubscribe = async (resourceId) => {
+        const response = await Unsubscribe(resourceId)
+        console.log(response.data)
+
+        const newSubscribedRes = userSubscribedRes.filter(resource => {
+            console.log(resource, id)
+            return resource !== id
+        })
+
+        console.log(newSubscribedRes)
+
+        dispatch(changeRes(newSubscribedRes))
+
+    }
+
+    const handleSubscribe = async () => {
+        const response = await subscribe(id)
+        const newSubscribedRes = [...userSubscribedRes, id]
+
+        console.log(newSubscribedRes)
+        // const oldUser = user
+        // newSubscribedRes.push[]
+        dispatch(changeRes(newSubscribedRes))
+    }
 
     const createUserReview = async () => {
         const response = await createReview(id, formData)
@@ -123,7 +151,11 @@ const SingleProduct = () => {
                         <div className="flex item-center justify-between mt-5">
                             {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${singleProduct.price}`}</h1> */}
                             {
-                                (userSubscribedRes)?.includes(singleProduct._id) ? <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded">Subscribed</a> : <a download href={`${singleProduct.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded">Subscribe</a>
+                                (userSubscribedRes)?.includes(singleProduct._id) ? <div onClick={() => handleUnsubscribe(singleProduct._id)} className="px-3 py-2 bg-green-800 text-white text-xs hover:cursor-pointer font-bold uppercase rounded">Unsubscribe</div> : <a className="px-3 py-2 bg-gray-800 text-white text-xs hover:cursor-pointer font-bold uppercase rounded" onClick={() => handleSubscribe()}>Subscribe</a>
+                            }
+
+                            {
+                                (userSubscribedRes)?.includes(singleProduct?._id) && <a download href={`${singleProduct?.link}`} className="px-3 py-2 bg-blue-800 text-white text-xs hover:cursor-pointer font-bold uppercase rounded">Download Resource</a>
                             }
 
                         </div>

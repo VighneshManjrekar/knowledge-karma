@@ -32,7 +32,9 @@ export default function Marketplace() {
 
           {
             products.map((product, index) => {
-              return <ProductCard product={product} key={index} />
+              if (product?.owner !== user?._id) {
+                return <ProductCard product={product} key={index} />
+              }
             })
           }
 

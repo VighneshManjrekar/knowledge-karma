@@ -14,12 +14,16 @@ import Menu from '@mui/material/Menu';
 import Typography from '@mui/material/Typography';
 
 
-const Navbar = () => {
+const Navbar = ({ loggedIn, setLoggedIn }) => {
     const location = useLocation()
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
     const { user } = useSelector(state => state.auth)
+
+    if (user === null) {
+        navigate('/marketplace')
+    }
 
 
     const logoutUser = async () => {
@@ -28,7 +32,8 @@ const Navbar = () => {
         const response = await authService.logoutUser();
         if (response.success) {
             dispatch(reset());
-            navigate('/');
+            setLoggedIn(false)
+            navigate('/marketplace');
         }
 
     }
@@ -74,12 +79,11 @@ const Navbar = () => {
                 </span>
             </div>
             {
-                user ? (
-
+                (user || loggedIn) ? (
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <div className={`${styles.userSection} hover:cursor-pointer flex items-center justify-center`} onClick={handleOpenUserMenu}>
-                                <span className="font-semibold text-2xl text-white">{user.name.charAt(0).toUpperCase()}</span>
+                                <span className="font-semibold text-2xl text-white">{user?.name.charAt(0).toUpperCase()}</span>
                             </div>
                         </Tooltip>
                         <Menu
