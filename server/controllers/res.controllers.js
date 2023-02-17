@@ -75,7 +75,6 @@ exports.createResources = asyncHandler(async (req, res, next) => {
     price,
     type,
     link,
-    image,
     owner,
     image,
   } = req.body;
