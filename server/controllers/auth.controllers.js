@@ -206,7 +206,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @desc    Report resource
 // @route   GET api/auth/report/:resourceId
 // @access  Private
-exports.updateProfile = asyncHandler(async (req, res, next) => {
+exports.reportRes = asyncHandler(async (req, res, next) => {
   const { resourceId } = req.params;
   const resource = await Res.findById(resourceId);
   if (!resource) {
@@ -217,5 +217,6 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   } else {
     resource.status++;
   }
-  res.status(200).json({ success: true, data: updatedUser });
+  const updatedRes = await resource.save();
+  res.status(200).json({ success: true, data: updatedRes });
 });
