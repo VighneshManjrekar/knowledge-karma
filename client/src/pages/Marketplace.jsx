@@ -26,7 +26,7 @@ export default function Marketplace() {
       {/* <h1>Marketplace</h1> */}
       <div className="w-full flex justify-center">
         {/* <SideBar /> */}
-        {/* <Drawer /> */}
+        <Drawer />
 
         <div className="py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-9/12 gap-4 mt-10">
 
