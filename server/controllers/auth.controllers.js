@@ -212,10 +212,10 @@ exports.reportRes = asyncHandler(async (req, res, next) => {
   if (!resource) {
     return next(new ErrorResponse("Resource not found", 404));
   }
-  if (resource.reports > 5) {
+  if (resource.reports > 4) {
     resource.status = false;
   } else {
-    resource.status++;
+    resource.reports++;
   }
   const updatedRes = await resource.save();
   res.status(200).json({ success: true, data: updatedRes });
