@@ -10,6 +10,8 @@ import Marketplace from './pages/Marketplace';
 import Home from './components/Home';
 import CommunityTab from './pages/CommunityTab';
 import Contributors from './pages/Contributors';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Auth from "./components/auth/Auth"
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -32,6 +34,7 @@ import NotFound from './pages/NotFound';
 
 function App() {
   const { user } = useSelector(state => state.auth)
+  const [loggedIn, setLoggedIn] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -47,6 +50,7 @@ function App() {
       if (userData.success) {
         dispatch(setUser(userData.user))
         dispatch(changeRes(subscribedResList))
+        setLoggedIn(true)
       } else {
         console.log("User session expired")
       }
@@ -80,9 +84,10 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       {/* <button onClick={onClick}>Click Me</button> */}
       <Router>
-        <Navbar />
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <Routes>
           <Route path='/' element={<Auth />}>
             <Route index={true} element={<Login />} />

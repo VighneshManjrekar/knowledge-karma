@@ -4,24 +4,20 @@ import { subscribe, Unsubscribe } from "../../http";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRes, setUser } from "../../features/auth/authSlice";
 
-const ProductCard = ({ product }) => {
+const SubscribedProduct = ({ product }) => {
     const { user, userSubscribedRes } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
     const handleSubscribe = async (resourceId) => {
-        try {
-            const response = await subscribe(resourceId)
-            const newSubscribedRes = [...userSubscribedRes, resourceId]
-            console.log(newSubscribedRes)
+        const response = await subscribe(resourceId)
+        const newSubscribedRes = [...userSubscribedRes, resourceId]
 
-            dispatch(changeRes(newSubscribedRes))
-
-        } catch (err) {
-            console.log(err)
-        }
-
+        console.log(newSubscribedRes)
+        // const oldUser = user
+        // newSubscribedRes.push[]
+        dispatch(changeRes(newSubscribedRes))
     }
 
     const handleUnsubscribe = async (resourceId) => {
@@ -51,8 +47,8 @@ const ProductCard = ({ product }) => {
 
 
     return <div className="flex flex-col mx-auto bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer" onClick={() => navigate(`/product/${product._id}`)}>
-        <img className="w-full bg-cover" src={`${product.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : product.image}`}>
-        </img>
+        {/* <img className="w-full bg-cover" src={`${product.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : product.image}`}>
+        </img> */}
 
         <div className="w-full p-3 text-left relative">
             {/* <span class="absolute top-2 right-[120px] bg-blue-500 text-blue-100 text-xs font-medium mr-2 px-3 py-1.5 rounded-full">{`${product.votes.upvote} Upvotes`}</span> */}
@@ -63,17 +59,17 @@ const ProductCard = ({ product }) => {
             <div className="mt-3 w-full">
                 <span className="inline-block my-1 bg-orange-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Branch : ${product.branch}`}</span>
                 <span className="inline-block my-1 bg-green-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Year : ${product.year}`}</span>
-                <span className="inline-block my-1 bg-red-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${product.type}`}</span>
+                {/* <span className="inline-block my-1 bg-red-200 text-gray-800 text-sm font-medium mr-2 px-3 py-1 rounded">{`Category : ${product.type}`}</span> */}
             </div>
             <div className="flex item-center justify-between mt-3">
                 {/* <h1 className="text-gray-700 font-bold text-xl">{`Price $ ${product.price}`}</h1> */}
                 {/* <a href={`${product.link}`} className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleSubscribe(product._id)}>Subscribe</a> */}
-                {
-                    (userSubscribedRes)?.includes(product._id) ? <div className="px-3 py-2 bg-green-800 text-white text-xs font-bold uppercase rounded" onClick={() => navigate(`/product/${product._id}`)}>View Resource</div> : <div className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => handleSubscribe(product._id)}>Subscribe</div>
-                }
+
+                <div className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={() => navigate(`/product/${product._id}`)}>View Resoucre</div>
+
             </div>
         </div>
     </div>;
 };
 
-export default ProductCard;
+export default SubscribedProduct;
