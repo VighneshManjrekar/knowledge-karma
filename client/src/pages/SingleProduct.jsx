@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { createReview, deleteReview, getProduct, getReviews, subscribe, Unsubscribe } from "../http";
+import { createReview, deleteReview, getProduct, getReviews, subscribe, Unsubscribe, updateResources } from "../http";
 import { useSelector } from "react-redux";
 import ProductReview from "../components/ProductReview";
 import { changeRes } from "../features/auth/authSlice";
@@ -101,6 +101,11 @@ const SingleProduct = () => {
         setProductReviews(newReviews)
     }
 
+    const submitReport = async (resId) =>{
+        const response = await updateResources(id, resId);
+        console.log(response.data)
+    }
+
     return <>
         {
             modalOpen && (<div className="z-10 absolute flex justify-center align-middle w-[100vw] h-[100vh]">
@@ -159,6 +164,8 @@ const SingleProduct = () => {
                             }
 
                         </div>
+                        <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-2 py-1 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" style={{ position: "absolute", right: 10, bottom: 20 }} onClick={() => submitReport(singleProduct._id)}>Report</button>
+
                     </div>
                 </div>
             </div>

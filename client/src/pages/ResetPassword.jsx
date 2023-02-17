@@ -11,81 +11,87 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import authService from "../features/auth/authService"
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import "../components/auth/auth.css";
 import { FormControl } from '@mui/material';
+// import resetPasswordFunc
 
-export default function Login() {
+export default function ResetPassword() {
     let navigate = useNavigate();
     const dispatch = useDispatch()
+    const { id, token } = useParams()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [c_password, setCPassword] = useState('')
     const [error, setError] = useState(false)
     const [helperText, setHelperText] = React.useState('');
 
-    const forgotPasswordFunc = ()=>{
-
-    }
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!email) {
+        if (!password) {
             setError(true);
-            setHelperText("Email not entered")
+            setHelperText("Password not entered")
         }
-        if(!password){
+        if (!c_password) {
             setError(true);
-            setHelperText("Password not entered") 
-       }
+            setHelperText("Confirm Password not entered")
+        }
+        if(password != c_password){
+            setError(true);
+            setHelperText("Confirm Password not entered")
+        }
+        const data1 = {
+            email
+        }
         const data = {
-            email, password
+             password, id, token
         }
-        const response = await authService.loginUser(data)
+        const response = await authService.resetPasswordFunc(data)
         if (response.success) {
-            dispatch(setUser(response.data))
             setError(false);
             setHelperText('')
             navigate('/marketplace')
         }
-        if(!response.success){
+        if (!response.success) {
             setError(true);
-            setHelperText("Please Enter correct credentials")
+            setHelperText("Unable to proceed")
         }
     }
 
 
-
     return (
+        <div style={{display:"flex", alignItems:'center', justifyContent:"center"}}>
         <Container
             className="loginFormComponent mx-0 px-0"
             component="main"
             maxWidth="xs"
-            sx={{ bgcolor: "transparent", margin: 10 }}
+            sx={{ bgcolor: "transparent", justifyContent:'center'}}
         >
             <CssBaseline />
             <div></div>
             <Box
                 sx={{
-                    margin: 1,
+                    margin: "100px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    justifyContent:"center"
+
                 }}
             >
                 <Avatar className="avatarIcon" sx={{ m: 1, bgcolor: "secondary.main" }}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Login to Continue
+                    Reset Password
                 </Typography>
                 <Box
                     component="form"
@@ -93,26 +99,8 @@ export default function Login() {
                     noValidate
                     sx={{ mt: 1, color: "text.primary" }}
                 >
-                    <FormHelperText sx={{color:'red'}}>{helperText}</FormHelperText>
-                    <FormControl error={error} sx={{width: 400}}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            type="email"
-                            label="Email Address"
-                            name="email"
-                            sx={{
-                                bgcolor: "bgc.secondary",
-                                color: "text.primary",
-                                borderRadius: 2,
-                            }}
-                            autoComplete="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            autoFocus
-                        />
+                    <FormHelperText sx={{ color: 'red' }}>{helperText}</FormHelperText>
+                    <FormControl error={error} sx={{ width: 400 }}>
                         <TextField
                             margin="normal"
                             required
@@ -127,7 +115,22 @@ export default function Login() {
                                 borderRadius: 2,
                             }}
                             value={password}
-                            autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="c_password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            sx={{
+                                bgcolor: "bgc.secondary",
+                                color: "text.primary",
+                                borderRadius: 2,
+                            }}
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <FormControlLabel
@@ -142,18 +145,17 @@ export default function Login() {
                             sx={{ mt: 3, mb: 2 }}
                             onClick={handleSubmit}
                         >
-                            Login
+                            Reset Password
                         </Button>
                     </FormControl>
                     <Grid container>
                         <Grid item xs>
                             <Link
-                                to="#"
+                                href="#"
                                 variant="body2"
                                 sx={{
                                     color: "text.secondary",
                                 }}
-                                onClick="forgotPasswordFunc"
                             >
                                 Forgot password?
                             </Link>
@@ -173,5 +175,6 @@ export default function Login() {
                 </Box>
             </Box>
         </Container>
+    </div>
     );
 }

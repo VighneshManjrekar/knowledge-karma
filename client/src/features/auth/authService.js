@@ -1,4 +1,4 @@
-import { getUser, login, register, logout } from "../../http/index"
+import { getUser, login, register, logout, resetPassword, forgotPassword } from "../../http/index"
 
 
 // Register user
@@ -24,6 +24,16 @@ const loginUser = async (data) => {
     return response.data
 }
 
+const ForgotPassword = async (data) =>{
+    const response = await forgotPassword(data);
+    return response.data
+}
+
+const resetPasswordFunc = async (data) =>{
+    const response = await resetPassword(data);
+    console.log(response.data);
+    return response.data
+}
 
 
 
@@ -38,6 +48,8 @@ const authService = {
     loginUser,
     getLoginUser,
     logoutUser,
+    resetPasswordFunc,
+    ForgotPassword
 }
 
 export default authService

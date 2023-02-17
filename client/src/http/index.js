@@ -16,6 +16,7 @@ export const login = async (data) => await api.post("/api/auth/login", data)
 export const getUser = () => api.get("/api/auth/profile")
 export const logout = () => api.get("/api/auth/logout")
 export const resetPassword = (id, token) => api.post(`/reset-password/${id}/${token}`)
+export const forgotPassword = () => api.post('/forgot-password')
 
 export const uploadProfileImage = (data) => api.post('/api/auth/profile', data)
 
