@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { createProduct, deleteUserResource, getUser } from "../http";
 import RecentResource from "../components/RecentResource";
+import Chart from "chart.js/auto";
+import { Bar } from "react-chartjs-2";
+
 
 const Profile = () => {
     const [name, setName] = useState('')
@@ -61,6 +64,30 @@ const Profile = () => {
         setUserSubscribedRes(user?.resourceSubscribed)
 
     }, [user])
+
+    // Function to cout number of resources approved per month
+    const countResources = async()=>{
+        const monthCountArr =new Array(12).fill(0);
+        // yyyy-MM-dd'T'HH:mm:ss.SSSZ  ==> month then foreach month ++
+        userProducts.forEach(({ createdAt }) => monthCountArr[new Date(createdAt).getMonth()] += 1);
+        console.log(Array.from(monthCountArr));
+        return monthCountArr;
+    }
+    const monthCount = countResources();
+
+
+    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    const data = {
+        labels,
+        datasets:[
+         {
+           label: "Shared Resources",
+            backgroundColor: "rgb(255, 99, 132)",
+            borderColor: "rgb(255, 99, 132)",
+                data: [1,2,1,2,3,0,0,1,5,3,1,3],
+            }
+        ]
+    }
 
 
     const handleDeleteResource = async (e, id) => {
@@ -192,7 +219,13 @@ const Profile = () => {
         <hr className="my-6" />
         <div className="w-full px-10">
             <h2 className="text-2xl font-bold">Overview</h2>
-            <div className="h-40 rounded-md my-10 bg-gray-400">
+            <div className="h-68 flex justify-evenly rounded-md my-10 bg-gray-100">
+                <div className="items-center px-2 mx-2" style={{width:"80%", height:"80%"}}>
+                <Bar data={data} options={{maintainAspectRatio: false}}/>
+                </div>
+                <div className="items-center px-2 mx-2" style={{width:"80%", height:"80%"}}>
+                <Bar data={data} options={{maintainAspectRatio: false}}/>
+                </div>
             </div>
         </div>
     </>;
