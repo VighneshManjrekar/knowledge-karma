@@ -38,10 +38,10 @@ const resourceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["NOTES", "PROJECT", "ASSIGNMENT"],
+    enum: ["NOTES", "PROJECT", "ASSIGNMENT","VIDEO"],
     required: [
       true,
-      "Please enter resource type from NOTES/PROJECT/ASSIGNMENT",
+      "Please enter resource type from NOTES/PROJECT/ASSIGNMENT/VIDEO",
     ],
   },
   link: {

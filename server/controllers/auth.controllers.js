@@ -54,7 +54,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const text = `
   Hi ${user.name},
   You recently requested to reset the password for your Knowledge Karma account. Follow this link to proceed:
-  ${resetLink}.
+  ${resetLink}
 
   Thanks, Knowledge Karma team
   `;
@@ -184,4 +184,22 @@ exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
   owner.subscribers -= 1;
   await owner.save();
   res.status(200).json({ success: true, data: unsubscribe });
+});
+
+// @desc    Update user profile
+// @route   POST api/auth/update/profile
+// @access  Private
+exports.updateProfile = asyncHandler(async (req, res, next) => {
+  const { profile } = req.body;
+  console.log(profile);
+  if (!profile) {
+    return next(new ErrorResponse("Please add profile", 400));
+  }
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return next(new ErrorResponse("User not found", 404));
+  }
+  user.profile = profile;
+  const updatedUser = await user.save();
+  res.status(200).json({ success: true, data: updatedUser });
 });

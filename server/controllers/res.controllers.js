@@ -7,6 +7,7 @@ const ErrorResponse = require("../utils/errorResponse");
 // @access  Private
 exports.getResources = asyncHandler(async (req, res, next) => {
   const branches = ["CHEM", "MECH", "COMP", "ELEC", "EXTC", "CIVIL", "OTHER"];
+  let filter = {};
   if (req.query.branch) {
     const branchesRequested = req.query.branch.toUpperCase().split(",");
     branchesRequested.forEach((branch) => {
@@ -14,16 +15,23 @@ exports.getResources = asyncHandler(async (req, res, next) => {
         branchesRequested.pop(branch);
       }
     });
-    req.query.branch = { $in: branchesRequested };
+    // req.query.branch = { $in: branchesRequested };
+    filter.branch = { $in: branchesRequested };
   } else {
     delete req.query.branch;
   }
-  const queryParams = { ...req.query, status: true };
+  // implement search query
+  filter.name = { $regex: req.query.search || "", $options: "i" };
+  const queryFilter = {
+    status: true,
+    ...filter,
+  };
+  const queryParams = { status: true };
   const page = +req.query.page || 1;
   const limit = +req.query.limit || 9;
   const startId = (page - 1) * limit;
   const endId = page * limit;
-  const query = await Res.find(queryParams).skip(startId).limit(limit);
+  const query = await Res.find(queryFilter).skip(startId).limit(limit);
   const total = await Res.countDocuments();
   const pagination = { total };
   if (endId < total) {
