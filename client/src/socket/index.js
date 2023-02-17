@@ -8,5 +8,5 @@ export const socketInit = () => {
         transports: ['websocket']
     };
 
-    return io('http://localhost:7000', options)
+    return io('http://localhost:5500', options)
 }

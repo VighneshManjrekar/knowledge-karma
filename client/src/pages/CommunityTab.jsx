@@ -57,12 +57,26 @@ const CommunityTab = () => {
                 }
             </div>
             <div className="mx-2 w-3/12 bg-gray-400 h-full rounded-sm p-2">
-                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("123")}>
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("COMP")}>
                     <span className="font-semibold">COMP</span>
                 </div>
-                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("234")} >
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("MECH")} >
                     <span className="font-semibold">MECH</span>
                 </div>
+
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("EXTC")} >
+                    <span className="font-semibold">EXTC</span>
+                </div>
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("CIVIL")} >
+                    <span className="font-semibold">CIVIL</span>
+                </div>
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("ELEC")} >
+                    <span className="font-semibold">ELEC</span>
+                </div>
+                <div className="rounded-md w-full h-12 hover:cursor-pointer my-2 bg-gray-700 text-white flex items-center justify-center" onClick={() => joinRoom("CHEM")} >
+                    <span className="font-semibold">CHEM</span>
+                </div>
+
             </div>
             <div className="mx-2 flex-1 bg-gray-400 h-full rounded-sm">
                 <div className="flex flex-col m-2">

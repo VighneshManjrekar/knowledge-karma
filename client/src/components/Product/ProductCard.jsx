@@ -50,8 +50,12 @@ const ProductCard = ({ product }) => {
     // }
 
 
+
     return <div className="flex flex-col mx-auto bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer" onClick={() => navigate(`/product/${product._id}`)}>
-        <img className="w-full bg-cover" src={`${product.image ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : product.image}`}>
+        {/* // check images from cloudinary else display default image */}
+
+
+        <img className="w-full bg-cover" src={`${product.image.endsWith('placeholder.jpg') ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lsH7aYpLKoW1sHTRp8XVzpjCyKhlojsug1uC9x7XMrP8puzol9C_O_BXkdfHPM3pVTI&usqp=CAU" : product.image}`}>
         </img>
 
         <div className="w-full p-3 text-left relative">
