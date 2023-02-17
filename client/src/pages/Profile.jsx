@@ -69,12 +69,12 @@ const Profile = () => {
     }, [user])
 
     // Function to cout number of resources approved per month
-    const countResources = async () => {
+    const countResources =  () => {
         const monthCountArr = new Array(12).fill(0);
         // yyyy-MM-dd'T'HH:mm:ss.SSSZ  ==> month then foreach month ++
         userProducts.forEach(({ createdAt }) => monthCountArr[new Date(createdAt).getMonth()] += 1);
         console.log(Array.from(monthCountArr));
-        return monthCountArr;
+        return Array.from(monthCountArr);
     }
     const monthCount = countResources();
     const botImg = "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
@@ -261,16 +261,15 @@ const Profile = () => {
             </div>
         </div>
         <hr className="my-6" />
-        <div className="w-full px-10">
+        <div className="w-full px-10" style={{height:200}}>
             <h2 className="text-2xl font-bold">Overview</h2>
-            <div className="h-68 flex justify-evenly rounded-md my-10">
-                <div className=" items-center px-2 mx-4 bg-gray-100 border-gray-500 border" style={{ width: "80%", height: "80%" }}>
-                    <Bar data={data} options={{ maintainAspectRatio: false }} />
+            <div className="h-100 flex justify-evenly rounded-md my-10 bg-gray-100">
+                <div className="items-center px-2 mx-2" style={{width:"80%", height:"100%"}}>
+                <Bar data={data} options={{maintainAspectRatio: false}}/>
                 </div>
-
-                <div className="items-center px-2 mx-4 bg-gray-100 border-gray-500 border " style={{ width: "80%", height: "80%" }}>
-                    <Bar data={data} options={{ maintainAspectRatio: false }} />
-                </div>
+                {/* <div className="items-center px-2 mx-2" style={{width:"80%", height:"80%"}}>
+                <Bar data={data} options={{maintainAspectRatio: false}}/>
+                </div> */}
             </div>
         </div>
     </>;
