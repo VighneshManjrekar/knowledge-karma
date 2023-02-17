@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { createProduct, deleteUserResource, getUser } from "../http";
+import { createProduct, deleteUserResource, getUser, uploadProfileImage } from "../http";
 import RecentResource from "../components/RecentResource";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
@@ -10,8 +10,10 @@ import SubscribedProduct from "../components/Product/SubscribedProduct";
 const Profile = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [image, setImage] = useState(null)
-    const [imagePreview, setImagePreview] = useState(null)
+    const [image, setImage] = useState(null);
+    const [uploadImg, setUploadingImg] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
     const { user } = useSelector(state => state.auth)
     const [userProducts, setUserProducts] = useState([])
     const [userSubscribedRes, setUserSubscribedRes] = useState([])
@@ -69,7 +71,7 @@ const Profile = () => {
     }, [user])
 
     // Function to cout number of resources approved per month
-    const countResources =  () => {
+    const countResources = () => {
         const monthCountArr = new Array(12).fill(0);
         // yyyy-MM-dd'T'HH:mm:ss.SSSZ  ==> month then foreach month ++
         userProducts.forEach(({ createdAt }) => monthCountArr[new Date(createdAt).getMonth()] += 1);
@@ -107,39 +109,75 @@ const Profile = () => {
     }
 
 
-    const validateImg = (e) => {
+    // const validateImg = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file.size >= 1048576) {
+    //         return alert("Max size is 1mb")
+    //     } else {
+    //         setImage(file);
+    //         setImagePreview(URL.createObjectURL(file))
+    //         uploadImage()
+    //     }
+    // }
+
+
+    // const uploadImage = async () => {
+    //     const data = new FormData();
+    //     data.append("file", image)
+    //     data.append("upload_present", "igly8sle")
+
+    //     try {
+    //         let rest = await fetch(
+    //             "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
+    //             {
+    //                 method: "POST",
+    //                 body: data
+    //             }
+    //         )
+
+    //         const uriData = await rest.json();
+    //         setImagePreview(uriData.uri)
+    //         // return uriData.uri
+    //     } catch (err) {
+    //         // toast(err)
+    //     }
+    // }
+
+    function validateImg(e) {
         const file = e.target.files[0];
-        if (file.size >= 1048576) {
-            return alert("Max size is 1mb")
+        if (file.size > 1048576) {
+            return alert("Max size is 1mb");
         } else {
             setImage(file);
-            setImagePreview(URL.createObjectURL(file))
-            uploadImage()
+            setImagePreview(URL.createObjectURL(file));
+            uploadImage(file)
         }
     }
 
-
-    const uploadImage = async () => {
+    async function uploadImage(uploadImg) {
         const data = new FormData();
-        data.append("file", image)
-        data.append("upload_present", "igly8sle")
-
+        data.append("file", uploadImg);
+        data.append("upload_preset", "igly8sle");
         try {
+            setUploadingImg(true);
             let rest = await fetch(
                 "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
                 {
                     method: "POST",
-                    body: data
+                    body: data,
                 }
-            )
-
-            const uriData = await rest.json();
-            setImagePreview(uriData.uri)
-            // return uriData.uri
+            );
+            const urlData = await rest.json();
+            setUploadingImg(false);
+            uploadProfileImage(urlData.url)
         } catch (err) {
-            // toast(err)
+            setUploadingImg(false);
+            console.log(err);
         }
     }
+
+
+
 
 
 
@@ -261,11 +299,11 @@ const Profile = () => {
             </div>
         </div>
         <hr className="my-6" />
-        <div className="w-full px-10" style={{height:200}}>
+        <div className="w-full px-10" style={{ height: 200 }}>
             <h2 className="text-2xl font-bold">Overview</h2>
             <div className="h-100 flex justify-evenly rounded-md my-10 bg-gray-100">
-                <div className="items-center px-2 mx-2" style={{width:"80%", height:"100%"}}>
-                <Bar data={data} options={{maintainAspectRatio: false}}/>
+                <div className="items-center px-2 mx-2" style={{ width: "80%", height: "100%" }}>
+                    <Bar data={data} options={{ maintainAspectRatio: false }} />
                 </div>
                 {/* <div className="items-center px-2 mx-2" style={{width:"80%", height:"80%"}}>
                 <Bar data={data} options={{maintainAspectRatio: false}}/>
