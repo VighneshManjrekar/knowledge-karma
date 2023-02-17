@@ -9,6 +9,8 @@ import { Bar } from "react-chartjs-2";
 const Profile = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [image, setImage] = useState(null)
+    const [imagePreview, setImagePreview] = useState(null)
     const { user } = useSelector(state => state.auth)
     const [userProducts, setUserProducts] = useState([])
     const [userSubscribedRes, setUserSubscribedRes] = useState([])
@@ -74,6 +76,7 @@ const Profile = () => {
         return monthCountArr;
     }
     const monthCount = countResources();
+    const botImg = "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
 
 
     const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -90,6 +93,7 @@ const Profile = () => {
     }
 
 
+
     const handleDeleteResource = async (e, id) => {
         // e.preventDefault()
         const response = await deleteUserResource(id)
@@ -98,6 +102,17 @@ const Profile = () => {
                 return item._id !== id
             })
             setUserProducts(newProducts)
+        }
+    }
+
+
+    const validateImg = (e) => {
+        const file = e.target.files[0];
+        if (file.size >= 1048576) {
+            return alert("Max size is 1mb")
+        } else {
+            setImage(file);
+            setImagePreview(URL.createObjectURL(file))
         }
     }
 
@@ -170,7 +185,11 @@ const Profile = () => {
         }
 
         <div className="w-full mx-auto mt-20 flex flex-col justify-center items-center ">
-            <img className="w-35 h-35 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Bordered avatar" />
+            <div className="relative w-40 h-40 rounded-md">
+                <img className="object-cover signup-profile-pic w-35 h-35 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src={imagePreview || botImg} alt="Bordered avatar" />
+                <label htmlFor="image-upload" className="w-7 h-7 rounded-full image-upload-label  bg-green-500 text-white absolute bottom-0 right-0 text-center">+</label>
+                <input type="file" id="image-upload" className="hidden" accept="image/png, image/jpeg" onChange={(e) => validateImg(e)} />
+            </div>
             <span className="text-lg text-cyan-900 mt-5 text-center font-bold">{name}</span>
             <span className="text-lg text-cyan-900 mt-2 text-center">{email}</span>
 
