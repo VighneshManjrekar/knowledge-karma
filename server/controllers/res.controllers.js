@@ -77,6 +77,7 @@ exports.createResources = asyncHandler(async (req, res, next) => {
     link,
     image,
     owner,
+    image,
   } = req.body;
 
   const resource = await Res.create({
@@ -90,6 +91,7 @@ exports.createResources = asyncHandler(async (req, res, next) => {
     type,
     link,
     owner,
+    image
   });
   res.status(201).json({ success: true, data: resource });
 });

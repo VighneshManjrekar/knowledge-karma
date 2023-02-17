@@ -38,7 +38,7 @@ const resourceSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["NOTES", "PROJECT", "ASSIGNMENT","VIDEO"],
+    enum: ["NOTES", "PROJECT", "ASSIGNMENT", "VIDEO"],
     required: [
       true,
       "Please enter resource type from NOTES/PROJECT/ASSIGNMENT/VIDEO",
@@ -62,6 +62,10 @@ const resourceSchema = new mongoose.Schema({
     default: function () {
       return `${this.type}-placeholder.jpg`;
     },
+  },
+  reports: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,
