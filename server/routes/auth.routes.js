@@ -12,6 +12,7 @@ const {
   unsubscribeResource,
   getUser,
   updateProfile,
+  deleteResources,
 } = require("../controllers/auth.controllers");
 const { protect } = require("../middleware/authorization");
 
@@ -27,6 +28,7 @@ router.get("/profile/:userId", getUser);
 // protected routes
 router.get("/profile", protect, getProfile);
 router.post("/profile", protect, updateProfile);
+router.get("/report/:resourceId", protect, deleteResources);
 router.get("/subscribe/:resourceId", protect, subscribeResource);
 
 module.exports = router;

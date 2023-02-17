@@ -191,7 +191,6 @@ exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   const { profile } = req.body;
-  console.log(profile);
   if (!profile) {
     return next(new ErrorResponse("Please add profile", 400));
   }
@@ -201,5 +200,22 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   }
   user.profile = profile;
   const updatedUser = await user.save();
+  res.status(200).json({ success: true, data: updatedUser });
+});
+
+// @desc    Report resource
+// @route   GET api/auth/report/:resourceId
+// @access  Private
+exports.updateProfile = asyncHandler(async (req, res, next) => {
+  const { resourceId } = req.params;
+  const resource = await Res.findById(resourceId);
+  if (!resource) {
+    return next(new ErrorResponse("Resource not found", 404));
+  }
+  if (resource.reports > 5) {
+    resource.status = false;
+  } else {
+    resource.status++;
+  }
   res.status(200).json({ success: true, data: updatedUser });
 });

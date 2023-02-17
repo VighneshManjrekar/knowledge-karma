@@ -34,11 +34,24 @@ exports.updateResources = asyncHandler(async (req, res, next) => {
 // @access  Private/Admin
 exports.deleteResources = asyncHandler(async (req, res, next) => {
   const { resourceId } = req.params;
-  console.log(resourceId);
+  const { reason } = req.body;
   const resource = await Res.findOne({ _id: resourceId });
+  const user = await User.findOne({ _id: resource.owner });
   if (!resource) {
     return next(new ErrorResponse("Resource not found", 404));
   }
   const deletedResource = await resource.remove();
+  const text = `
+  Hi ${user.name},
+  Your uploaded resource ${deletedResource.name} has been deleted by admin. Due to ${reason}
+  Thanks, Knowledge Karma team.
+  `;
+  const option = {
+    to: user.email,
+    subject: "Resource deleted",
+    text,
+  };
+
+  await sendMail(option);
   res.status(200).json({ success: true, data: deletedResource });
 });
