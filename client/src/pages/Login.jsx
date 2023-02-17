@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -18,6 +19,7 @@ import authService from "../features/auth/authService"
 import { setUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import "../components/auth/auth.css";
+import { FormControl } from '@mui/material';
 
 export default function Login() {
     let navigate = useNavigate();
@@ -25,21 +27,35 @@ export default function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
+    const [helperText, setHelperText] = React.useState('');
+
 
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!email || !password) {
-            return
+        if (!email) {
+            setError(true);
+            setHelperText("Email not entered")
         }
+        if(!password){
+            setError(true);
+            setHelperText("Password not entered") 
+       }
         const data = {
             email, password
         }
         const response = await authService.loginUser(data)
         if (response.success) {
             dispatch(setUser(response.data))
+            setError(false);
+            setHelperText('')
             navigate('/marketplace')
+        }
+        if(!response.success){
+            setError(true);
+            setHelperText("Please Enter correct credentials")
         }
     }
 
@@ -73,55 +89,58 @@ export default function Login() {
                     noValidate
                     sx={{ mt: 1, color: "text.primary" }}
                 >
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        type="email"
-                        label="Email Address"
-                        name="email"
-                        sx={{
-                            bgcolor: "bgc.secondary",
-                            color: "text.primary",
-                            borderRadius: 2,
-                        }}
-                        autoComplete="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        sx={{
-                            bgcolor: "bgc.secondary",
-                            color: "text.primary",
-                            borderRadius: 2,
-                        }}
-                        value={password}
-                        autoComplete="current-password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="secondary" />}
-                        label="Remember me"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        color="secondary"
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleSubmit}
-                    >
-                        Login
-                    </Button>
+                    <FormHelperText sx={{color:'red'}}>{helperText}</FormHelperText>
+                    <FormControl error={error} sx={{width: 400}}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            type="email"
+                            label="Email Address"
+                            name="email"
+                            sx={{
+                                bgcolor: "bgc.secondary",
+                                color: "text.primary",
+                                borderRadius: 2,
+                            }}
+                            autoComplete="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            autoFocus
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            sx={{
+                                bgcolor: "bgc.secondary",
+                                color: "text.primary",
+                                borderRadius: 2,
+                            }}
+                            value={password}
+                            autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="secondary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            color="secondary"
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={handleSubmit}
+                        >
+                            Login
+                        </Button>
+                    </FormControl>
                     <Grid container>
                         <Grid item xs>
                             <Link
