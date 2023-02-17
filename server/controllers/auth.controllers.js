@@ -191,6 +191,7 @@ exports.unsubscribeResource = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.updateProfile = asyncHandler(async (req, res, next) => {
   const { profile } = req.body;
+  console.log(req.body)
   console.log(profile);
   if (!profile) {
     return next(new ErrorResponse("Please add profile", 400));

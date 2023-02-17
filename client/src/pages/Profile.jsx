@@ -24,7 +24,8 @@ const Profile = () => {
         year: "",
         subjectCode: "",
         type: "",
-        link: ""
+        link: "",
+        image: ""
     })
     const [modalOpen, setModalOpen] = useState(false)
 
@@ -169,10 +170,32 @@ const Profile = () => {
             );
             const urlData = await rest.json();
             setUploadingImg(false);
-            uploadProfileImage(urlData.url)
+            await uploadProfileImage({ profile: urlData.url })
         } catch (err) {
             setUploadingImg(false);
             console.log(err);
+        }
+    }
+
+    async function uploadResImage(e) {
+        const data = new FormData();
+        // console.log("Running")
+        const file = e.target.files[0]
+        data.append("file", file);
+        data.append("upload_preset", "igly8sle");
+        try {
+            setUploadingImg(true);
+            let rest = await fetch(
+                "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
+                {
+                    method: "POST",
+                    body: data,
+                }
+            );
+            const urlData = await rest.json();
+            setFormData({ ...formData, image: urlData.url })
+        } catch (err) {
+            console.log(err)
         }
     }
 
@@ -230,6 +253,10 @@ const Profile = () => {
                         <div>
                             <label htmlFor="link" className="block mb-2 text-sm font-medium text-gray-900 text-left">Link</label>
                             <input type="text" id="link" className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required name="link" value={formData.link} onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })} />
+                        </div>
+                        <div>
+                            <label htmlFor="resImage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                            <input name="resImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={(e) => uploadResImage(e)} />
                         </div>
                         <div>
                             <label htmlFor="type" className="text-left block mb-2 text-sm font-medium text-gray-900">Type</label>

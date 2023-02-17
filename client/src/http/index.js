@@ -17,7 +17,7 @@ export const getUser = () => api.get("/api/auth/profile")
 export const logout = () => api.get("/api/auth/logout")
 export const resetPassword = (id, token) => api.post(`/reset-password/${id}/${token}`)
 
-export const updateProfileImage = (data) => api.post('/api/auth/profile', data)
+export const uploadProfileImage = (data) => api.post('/api/auth/profile', data)
 
 
 //Admin Routes
