@@ -14,7 +14,7 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await getAllProducts();
-      // console.log(response.data.data)
+      console.log(response.data.data)
       setProducts(response.data.data)
     }
 
@@ -33,6 +33,7 @@ export default function Marketplace() {
           {
             products.map((product, index) => {
               if (product?.owner !== user?._id) {
+                console.log(product.image)
                 return <ProductCard product={product} key={index} />
               }
             })

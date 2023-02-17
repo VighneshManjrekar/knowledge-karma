@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { createProduct, deleteUserResource, getUser } from "../http";
+import { createProduct, deleteUserResource, getUser, uploadProfileImage } from "../http";
 import RecentResource from "../components/RecentResource";
 import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
@@ -10,8 +10,10 @@ import SubscribedProduct from "../components/Product/SubscribedProduct";
 const Profile = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [image, setImage] = useState(null)
-    const [imagePreview, setImagePreview] = useState(null)
+    const [image, setImage] = useState(null);
+    const [uploadImg, setUploadingImg] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
     const { user } = useSelector(state => state.auth)
     const [userProducts, setUserProducts] = useState([])
     const [userSubscribedRes, setUserSubscribedRes] = useState([])
@@ -22,7 +24,8 @@ const Profile = () => {
         year: "",
         subjectCode: "",
         type: "",
-        link: ""
+        link: "",
+        image: ""
     })
     const [modalOpen, setModalOpen] = useState(false)
 
@@ -69,12 +72,12 @@ const Profile = () => {
     }, [user])
 
     // Function to cout number of resources approved per month
-    const countResources = async () => {
+    const countResources = () => {
         const monthCountArr = new Array(12).fill(0);
         // yyyy-MM-dd'T'HH:mm:ss.SSSZ  ==> month then foreach month ++
         userProducts.forEach(({ createdAt }) => monthCountArr[new Date(createdAt).getMonth()] += 1);
         console.log(Array.from(monthCountArr));
-        return monthCountArr;
+        return Array.from(monthCountArr);
     }
     const monthCount = countResources();
     const botImg = "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
@@ -107,39 +110,97 @@ const Profile = () => {
     }
 
 
-    const validateImg = (e) => {
+    // const validateImg = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file.size >= 1048576) {
+    //         return alert("Max size is 1mb")
+    //     } else {
+    //         setImage(file);
+    //         setImagePreview(URL.createObjectURL(file))
+    //         uploadImage()
+    //     }
+    // }
+
+
+    // const uploadImage = async () => {
+    //     const data = new FormData();
+    //     data.append("file", image)
+    //     data.append("upload_present", "igly8sle")
+
+    //     try {
+    //         let rest = await fetch(
+    //             "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
+    //             {
+    //                 method: "POST",
+    //                 body: data
+    //             }
+    //         )
+
+    //         const uriData = await rest.json();
+    //         setImagePreview(uriData.uri)
+    //         // return uriData.uri
+    //     } catch (err) {
+    //         // toast(err)
+    //     }
+    // }
+
+    function validateImg(e) {
         const file = e.target.files[0];
-        if (file.size >= 1048576) {
-            return alert("Max size is 1mb")
+        if (file.size > 1048576) {
+            return alert("Max size is 1mb");
         } else {
             setImage(file);
-            setImagePreview(URL.createObjectURL(file))
-            uploadImage()
+            setImagePreview(URL.createObjectURL(file));
+            uploadImage(file)
         }
     }
 
-
-    const uploadImage = async () => {
+    async function uploadImage(uploadImg) {
         const data = new FormData();
-        data.append("file", image)
-        data.append("upload_present", "igly8sle")
-
+        data.append("file", uploadImg);
+        data.append("upload_preset", "igly8sle");
         try {
+            setUploadingImg(true);
             let rest = await fetch(
                 "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
                 {
                     method: "POST",
-                    body: data
+                    body: data,
                 }
-            )
-
-            const uriData = await rest.json();
-            setImagePreview(uriData.uri)
-            // return uriData.uri
+            );
+            const urlData = await rest.json();
+            setUploadingImg(false);
+            await uploadProfileImage({ profile: urlData.url })
         } catch (err) {
-            // toast(err)
+            setUploadingImg(false);
+            console.log(err);
         }
     }
+
+    async function uploadResImage(e) {
+        const data = new FormData();
+        // console.log("Running")
+        const file = e.target.files[0]
+        data.append("file", file);
+        data.append("upload_preset", "igly8sle");
+        try {
+            setUploadingImg(true);
+            let rest = await fetch(
+                "https://api.cloudinary.com/v1_1/vighnesh/image/upload",
+                {
+                    method: "POST",
+                    body: data,
+                }
+            );
+            const urlData = await rest.json();
+            setFormData({ ...formData, image: urlData.url })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+
 
 
 
@@ -192,6 +253,10 @@ const Profile = () => {
                         <div>
                             <label htmlFor="link" className="block mb-2 text-sm font-medium text-gray-900 text-left">Link</label>
                             <input type="text" id="link" className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required name="link" value={formData.link} onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })} />
+                        </div>
+                        <div>
+                            <label htmlFor="resImage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                            <input name="resImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={(e) => uploadResImage(e)} />
                         </div>
                         <div>
                             <label htmlFor="type" className="text-left block mb-2 text-sm font-medium text-gray-900">Type</label>
@@ -261,16 +326,15 @@ const Profile = () => {
             </div>
         </div>
         <hr className="my-6" />
-        <div className="w-full px-10">
+        <div className="w-full px-10" style={{ height: 200 }}>
             <h2 className="text-2xl font-bold">Overview</h2>
-            <div className="h-68 flex justify-evenly rounded-md my-10">
-                <div className=" items-center px-2 mx-4 bg-gray-100 border-gray-500 border" style={{ width: "80%", height: "80%" }}>
+            <div className="h-100 flex justify-evenly rounded-md my-10 bg-gray-100">
+                <div className="items-center px-2 mx-2" style={{ width: "80%", height: "100%" }}>
                     <Bar data={data} options={{ maintainAspectRatio: false }} />
                 </div>
-
-                <div className="items-center px-2 mx-4 bg-gray-100 border-gray-500 border " style={{ width: "80%", height: "80%" }}>
-                    <Bar data={data} options={{ maintainAspectRatio: false }} />
-                </div>
+                {/* <div className="items-center px-2 mx-2" style={{width:"80%", height:"80%"}}>
+                <Bar data={data} options={{maintainAspectRatio: false}}/>
+                </div> */}
             </div>
         </div>
     </>;

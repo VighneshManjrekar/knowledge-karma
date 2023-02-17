@@ -15,6 +15,9 @@ export const register = async (data) => await api.post("/api/auth/register", dat
 export const login = async (data) => await api.post("/api/auth/login", data)
 export const getUser = () => api.get("/api/auth/profile")
 export const logout = () => api.get("/api/auth/logout")
+export const resetPassword = (id, token) => api.post(`/reset-password/${id}/${token}`)
+
+export const uploadProfileImage = (data) => api.post('/api/auth/profile', data)
 
 
 //Admin Routes
@@ -34,6 +37,7 @@ export const updateUserResource = (id, data) => api.put(`/api/resources/${id}`, 
 export const getReviews = (id) => api.get(`/api/resources/${id}/reviews`)
 export const deleteReview = (resourceId, reviewId) => api.delete(`/api/resources/${resourceId}/reviews/${reviewId}`)
 export const createReview = (resourceId, data) => api.post(`/api/resources/${resourceId}/reviews`, data)
+
 
 //Ranking
 export const getRanking = () => api.get("/api/auth/ranking")

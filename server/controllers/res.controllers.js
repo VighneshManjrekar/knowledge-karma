@@ -86,6 +86,7 @@ exports.createResources = asyncHandler(async (req, res, next) => {
     year,
     subjectCode,
     price,
+    image,
     type,
     link,
     owner,
