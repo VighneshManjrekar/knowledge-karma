@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 10, 10, 10;
+  --background-start-rgb: 244, 244, 244;
+  --background-end-rgb: 244, 244, 244;
+}
+
+@layer components {
+  .HeroButton {
+    @apply px-2 md:px-6 py-2 border border-[#111111] rounded-full uppercase text-[12px] md:text-sm text-gray-500 font-bold transition-all tracking-widest hover:border-[#434343] hover:text-gray-200 hover:cursor-pointer border-t-0 border-l-0 border-r-0 hover:border-r-2
+  }
+
+  .ContactInput {
+    @apply outline-none bg-slate-300/10 rounded-sm border-b px-1 py-2 md:px-2 md:py-4 text-gray-300 border-[#242424] placeholder-gray-300 transition-all focus:border-[#F7ABBA]/80 focus:text-[#F7ABBA]/80
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 248, 248, 248;
+    --background-end-rgb: 248, 248, 248;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+
+
+typewriting {
+  padding: 20px;
+  background: #005F6B;
+  color: #00DFFC
+}
+
+.type {
+  color: #0000;
+  background:
+    linear-gradient(-90deg, #00DFFC 5px, #0000 0) 10px 0,
+    linear-gradient(#00DFFC 0 0) 0 0;
+  background-size: calc(53*1ch) 200%;
+  -webkit-background-clip: padding-box, text;
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  animation:
+    b .7s infinite steps(1),
+    t calc(53*.3s) steps(53) forwards;
+  /* animation-iteration-count:infinite; */
+}
+
+@keyframes t {
+  from {
+    background-size: 0 200%
+  }
+}
+
+@keyframes b {
+  50% {
+    background-position: 0 -100%, 0 0
+  }
+}
